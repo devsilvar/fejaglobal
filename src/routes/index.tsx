@@ -683,12 +683,12 @@ function Testimonials() {
                   key={r.name}
                   className="px-3 flex-[0_0_100%] md:flex-[0_0_50%] lg:flex-[0_0_33.333%] min-w-0"
                 >
-                  <figure className="bg-white p-7 rounded-2xl ring-1 ring-black/5 shadow-sm hover:shadow-lg transition-shadow flex flex-col h-full">
+                  <figure className="bg-white p-7 border border-brand-navy/10 hover:border-brand-navy/30 transition-colors flex flex-col h-full">
                     <div className="flex items-center justify-between mb-4">
                       <div className="flex text-[oklch(0.78_0.18_85)]">
                         {[0,1,2,3,4].map((i) => <Star key={i} className="size-4" weight="fill" />)}
                       </div>
-                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200/70">
+                      <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-emerald-50 text-emerald-700 border border-emerald-200/70">
                         <ShieldCheck className="size-3" weight="fill" />
                         <span className="font-mont text-[10px] font-semibold uppercase tracking-wider">Verified</span>
                       </span>
@@ -696,8 +696,8 @@ function Testimonials() {
                     <blockquote className="text-[15px] text-foreground leading-relaxed flex-1">
                       &ldquo;{r.quote}&rdquo;
                     </blockquote>
-                    <figcaption className="mt-6 pt-5 border-t border-border flex items-center gap-3">
-                      <div className="size-10 rounded-full bg-brand-navy text-white grid place-items-center font-mont text-xs font-semibold tracking-wider">
+                    <figcaption className="mt-6 pt-5 border-t border-brand-navy/10 flex items-center gap-3">
+                      <div className="size-10 bg-brand-navy text-white grid place-items-center font-mont text-xs font-semibold tracking-wider">
                         {r.initials}
                       </div>
                       <div>
