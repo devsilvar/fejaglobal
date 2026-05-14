@@ -648,7 +648,7 @@ function Testimonials() {
             description="Verified stories from students and parents we've supported into Canadian and UK universities."
           />
           <div className="flex flex-wrap items-stretch gap-3">
-            <div className="flex items-center gap-3 bg-white px-5 py-4 rounded-2xl ring-1 ring-black/5 shadow-sm">
+            <div className="flex items-center gap-3 bg-white px-5 py-4 border border-brand-navy/10">
               <GoogleLogo className="size-7" weight="duotone" />
               <div>
                 <div className="flex items-baseline gap-2">
@@ -662,8 +662,8 @@ function Testimonials() {
                 </div>
               </div>
             </div>
-            <div className="flex items-center gap-3 bg-white px-5 py-4 rounded-2xl ring-1 ring-black/5 shadow-sm">
-              <div className="size-7 rounded-full bg-emerald-50 grid place-items-center">
+            <div className="flex items-center gap-3 bg-white px-5 py-4 border border-brand-navy/10">
+              <div className="size-7 bg-emerald-50 grid place-items-center">
                 <ShieldCheck className="size-4 text-emerald-600" weight="fill" />
               </div>
               <div>
@@ -683,12 +683,12 @@ function Testimonials() {
                   key={r.name}
                   className="px-3 flex-[0_0_100%] md:flex-[0_0_50%] lg:flex-[0_0_33.333%] min-w-0"
                 >
-                  <figure className="bg-white p-7 rounded-2xl ring-1 ring-black/5 shadow-sm hover:shadow-lg transition-shadow flex flex-col h-full">
+                  <figure className="bg-white p-7 border border-brand-navy/10 hover:border-brand-navy/30 transition-colors flex flex-col h-full">
                     <div className="flex items-center justify-between mb-4">
                       <div className="flex text-[oklch(0.78_0.18_85)]">
                         {[0,1,2,3,4].map((i) => <Star key={i} className="size-4" weight="fill" />)}
                       </div>
-                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200/70">
+                      <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-emerald-50 text-emerald-700 border border-emerald-200/70">
                         <ShieldCheck className="size-3" weight="fill" />
                         <span className="font-mont text-[10px] font-semibold uppercase tracking-wider">Verified</span>
                       </span>
@@ -696,8 +696,8 @@ function Testimonials() {
                     <blockquote className="text-[15px] text-foreground leading-relaxed flex-1">
                       &ldquo;{r.quote}&rdquo;
                     </blockquote>
-                    <figcaption className="mt-6 pt-5 border-t border-border flex items-center gap-3">
-                      <div className="size-10 rounded-full bg-brand-navy text-white grid place-items-center font-mont text-xs font-semibold tracking-wider">
+                    <figcaption className="mt-6 pt-5 border-t border-brand-navy/10 flex items-center gap-3">
+                      <div className="size-10 bg-brand-navy text-white grid place-items-center font-mont text-xs font-semibold tracking-wider">
                         {r.initials}
                       </div>
                       <div>
@@ -788,7 +788,7 @@ function Visa() {
             title="Visa applications, decoded."
             description="We've supported students through Canada study permits and UK Student Visas, and we know what immigration officers look for — and what hurts an application."
           />
-          <ul className="mt-8 space-y-3">
+          <ul className="mt-8 border-t border-l border-brand-navy/10">
             {[
               "Personalised document checklist for your profile",
               "Statement of purpose & study plan review",
@@ -796,8 +796,8 @@ function Visa() {
               "Biometrics and interview preparation",
               "Refusal recovery & re-application strategy",
             ].map((p) => (
-              <li key={p} className="flex items-start gap-3 text-sm">
-                <span className="size-5 rounded-full bg-brand-blue-soft text-brand-blue grid place-items-center mt-0.5">
+              <li key={p} className="flex items-start gap-3 text-sm p-4 border-r border-b border-brand-navy/10">
+                <span className="size-5 bg-brand-blue-soft text-brand-blue grid place-items-center mt-0.5 shrink-0">
                   <Check className="size-3" weight="bold" />
                 </span>
                 <span className="text-foreground">{p}</span>
@@ -805,7 +805,7 @@ function Visa() {
             ))}
           </ul>
         </div>
-        <div className="bg-brand-navy text-white rounded-3xl p-10 shadow-2xl">
+        <div className="bg-brand-navy text-white p-10 border border-brand-navy">
           <ShieldCheck className="size-10 text-brand-blue mb-5" weight="duotone" />
           <div className="font-display text-4xl md:text-5xl font-light tracking-[-0.03em] mb-3 leading-tight">
             We won&apos;t submit until <span className="italic text-brand-blue">it&apos;s ready.</span>
@@ -816,9 +816,10 @@ function Visa() {
           </p>
           <Link
             to="/contact"
-            className="inline-flex items-center bg-white text-brand-navy py-2.5 px-5 rounded-md font-mont text-sm font-semibold hover:bg-white/90"
+            className="group/btn inline-flex items-center justify-between gap-6 py-3 px-4 font-mont text-xs font-bold uppercase tracking-widest text-brand-navy bg-white border border-white hover:bg-transparent hover:text-white transition-colors"
           >
             Speak to a Visa Advisor
+            <ArrowRight className="size-4 group-hover/btn:translate-x-1 transition-transform" />
           </Link>
         </div>
       </div>
