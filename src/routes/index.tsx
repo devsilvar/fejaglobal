@@ -648,7 +648,7 @@ function Testimonials() {
             description="Verified stories from students and parents we've supported into Canadian and UK universities."
           />
           <div className="flex flex-wrap items-stretch gap-3">
-            <div className="flex items-center gap-3 bg-white px-5 py-4 rounded-2xl ring-1 ring-black/5 shadow-sm">
+            <div className="flex items-center gap-3 bg-white px-5 py-4 border border-brand-navy/10">
               <GoogleLogo className="size-7" weight="duotone" />
               <div>
                 <div className="flex items-baseline gap-2">
@@ -662,8 +662,8 @@ function Testimonials() {
                 </div>
               </div>
             </div>
-            <div className="flex items-center gap-3 bg-white px-5 py-4 rounded-2xl ring-1 ring-black/5 shadow-sm">
-              <div className="size-7 rounded-full bg-emerald-50 grid place-items-center">
+            <div className="flex items-center gap-3 bg-white px-5 py-4 border border-brand-navy/10">
+              <div className="size-7 bg-emerald-50 grid place-items-center">
                 <ShieldCheck className="size-4 text-emerald-600" weight="fill" />
               </div>
               <div>
