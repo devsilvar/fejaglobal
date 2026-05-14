@@ -239,18 +239,26 @@ function Hero() {
             </div>
 
             {/* Floating quote card (bottom left) */}
-            <div className="absolute -bottom-6 -left-4 sm:-left-10 bg-white rounded-2xl p-5 shadow-[0_20px_50px_-20px_oklch(0.16_0.04_265_/_0.35)] ring-1 ring-border max-w-[240px]">
-              <div className="flex items-center gap-2 mb-2">
-                <div className="flex text-[oklch(0.78_0.18_85)]">
-                  {[0,1,2,3,4].map((i) => <Star key={i} className="size-3" weight="fill" />)}
+            <div className="absolute -bottom-6 -left-4 sm:-left-10 max-w-[240px]">
+              {/* Color accent block behind */}
+              <div
+                className="absolute -bottom-3 -left-3 w-full h-full bg-brand-blue -z-10"
+                aria-hidden
+              />
+              <div className="absolute -top-3 -right-3 size-10 bg-[oklch(0.78_0.18_85)] -z-10" aria-hidden />
+              <figure className="relative bg-white p-5 border border-brand-navy/15 shadow-[0_24px_50px_-20px_oklch(0.16_0.04_265_/_0.45)]">
+                <div className="flex items-center justify-between gap-2 mb-3">
+                  <div className="flex items-center gap-0.5 text-[oklch(0.78_0.18_85)]" aria-label="5 out of 5 stars">
+                    {[0,1,2,3,4].map((i) => <Star key={i} className="size-3" weight="fill" />)}
+                  </div>
+                  <span className="font-mont text-[9px] font-bold text-brand-navy uppercase tracking-[0.16em]">
+                    Google · 4.9
+                  </span>
                 </div>
-                <span className="font-mont text-[10px] font-semibold text-muted-foreground uppercase tracking-wider">
-                  Google · 4.9
-                </span>
-              </div>
-              <div className="font-display text-[15px] text-brand-navy leading-snug">
-                &ldquo;One <span className="italic text-brand-blue">team</span>, handled my entire UK application end-to-end.&rdquo;
-              </div>
+                <blockquote className="font-display text-[15px] text-brand-navy leading-snug">
+                  &ldquo;One <span className="italic text-brand-blue">team</span>, handled my entire UK application end-to-end.&rdquo;
+                </blockquote>
+              </figure>
             </div>
 
             {/* Floating reply chip (mid right) */}
