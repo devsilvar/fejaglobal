@@ -683,26 +683,26 @@ function Testimonials() {
                   key={r.name}
                   className="px-3 flex-[0_0_100%] md:flex-[0_0_50%] lg:flex-[0_0_33.333%] min-w-0"
                 >
-                  <figure className="bg-white p-7 border border-brand-navy/10 hover:border-brand-navy/30 transition-colors flex flex-col h-full">
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="flex text-[oklch(0.78_0.18_85)]">
-                        {[0,1,2,3,4].map((i) => <Star key={i} className="size-4" weight="fill" />)}
+                  <figure className="bg-white p-6 sm:p-7 border border-brand-navy/10 hover:border-brand-navy/30 transition-colors flex flex-col h-full">
+                    <div className="flex items-center justify-between gap-3 mb-5">
+                      <div className="flex items-center gap-0.5 text-[oklch(0.78_0.18_85)]" aria-label="5 out of 5 stars">
+                        {[0,1,2,3,4].map((i) => <Star key={i} className="size-[14px] sm:size-4" weight="fill" />)}
                       </div>
-                      <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-emerald-50 text-emerald-700 border border-emerald-200/70">
-                        <ShieldCheck className="size-3" weight="fill" />
-                        <span className="font-mont text-[10px] font-semibold uppercase tracking-wider">Verified</span>
+                      <span className="inline-flex items-center gap-1.5 px-2 py-1 bg-emerald-50 text-emerald-700 border border-emerald-200/70">
+                        <ShieldCheck className="size-3 shrink-0" weight="fill" />
+                        <span className="font-mont text-[10px] font-semibold uppercase tracking-[0.14em] leading-none">Verified</span>
                       </span>
                     </div>
-                    <blockquote className="text-[15px] text-foreground leading-relaxed flex-1">
+                    <blockquote className="text-[15px] sm:text-base text-foreground leading-relaxed flex-1 text-pretty">
                       &ldquo;{r.quote}&rdquo;
                     </blockquote>
                     <figcaption className="mt-6 pt-5 border-t border-brand-navy/10 flex items-center gap-3">
-                      <div className="size-10 bg-brand-navy text-white grid place-items-center font-mont text-xs font-semibold tracking-wider">
+                      <div className="size-10 shrink-0 bg-brand-navy text-white grid place-items-center font-mont text-xs font-semibold tracking-wider">
                         {r.initials}
                       </div>
-                      <div>
-                        <div className="text-sm font-semibold text-brand-navy leading-tight">{r.name}</div>
-                        <div className="font-mont text-[11px] text-muted-foreground mt-0.5">{r.meta}</div>
+                      <div className="min-w-0">
+                        <div className="text-sm font-semibold text-brand-navy leading-tight truncate">{r.name}</div>
+                        <div className="font-mont text-[11px] text-muted-foreground mt-1 leading-tight truncate">{r.meta}</div>
                       </div>
                     </figcaption>
                   </figure>
