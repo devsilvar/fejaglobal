@@ -100,12 +100,6 @@ function Hero() {
       <div className="max-w-7xl mx-auto px-6 pt-14 pb-20 lg:pt-20 lg:pb-28 grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
         {/* LEFT — copy */}
         <div className="lg:col-span-6 animate-fade-up relative">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white ring-1 ring-border/80 mb-7 shadow-sm">
-            <span className="size-1.5 rounded-full bg-brand-blue animate-pulse" />
-            <span className="font-mont text-[11px] font-semibold text-brand-navy uppercase tracking-[0.14em]">
-              September 2026 intake · Now open
-            </span>
-          </div>
 
           <h1 className="font-display text-[2.75rem] sm:text-[3.5rem] lg:text-[5rem] xl:text-[5.5rem] font-light tracking-[-0.035em] leading-[0.95] text-balance text-brand-navy mb-7">
             Your bridge to{" "}
