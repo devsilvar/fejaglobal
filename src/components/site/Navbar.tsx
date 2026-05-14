@@ -1,0 +1,92 @@
+import { Link } from "@tanstack/react-router";
+import { useState } from "react";
+import { List, X, ArrowUpRight } from "@phosphor-icons/react";
+
+const links = [
+  { to: "/destinations", label: "Destinations" },
+  { to: "/services", label: "Services" },
+  { to: "/about", label: "About" },
+  { to: "/contact", label: "Contact" },
+] as const;
+
+export function Navbar() {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="sticky top-0 z-50">
+      {/* Announcement bar */}
+      <div className="bg-brand-peach/70 text-brand-navy">
+        <div className="max-w-7xl mx-auto px-6 h-9 flex items-center justify-center gap-2 text-[13px]">
+          <span className="font-mont font-medium">September 2026 intake — early planning helps.</span>
+          <Link to="/contact" className="font-mont font-semibold text-brand-blue inline-flex items-center gap-0.5 hover:underline underline-offset-4">
+            Talk to us <ArrowUpRight className="size-3.5" />
+          </Link>
+        </div>
+      </div>
+
+      <nav className="border-b border-border/50 glass-nav">
+        <div className="max-w-7xl mx-auto px-6 h-[72px] flex items-center justify-between">
+          <div className="flex items-center gap-10">
+            <Link to="/" className="flex items-center gap-2.5 group">
+              <span className="relative size-8 rounded-lg bg-brand-navy grid place-items-center overflow-hidden">
+                <span className="size-3 rounded-full bg-brand-blue" />
+                <span className="absolute -right-1 -bottom-1 size-2 rounded-full bg-brand-peach" />
+              </span>
+              <span className="font-display text-xl font-medium tracking-tight text-brand-navy">
+                lumina<span className="italic text-brand-blue">edu</span>
+              </span>
+            </Link>
+            <div className="hidden md:flex gap-7">
+              {links.map((l) => (
+                <Link
+                  key={l.to}
+                  to={l.to}
+                  className="font-mont text-sm font-medium text-foreground/70 hover:text-brand-navy transition-colors"
+                  activeProps={{ className: "text-brand-navy" }}
+                >
+                  {l.label}
+                </Link>
+              ))}
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <Link
+              to="/contact"
+              className="hidden md:inline-flex items-center gap-1.5 font-mont text-sm font-semibold bg-brand-blue text-white py-2.5 px-5 rounded-full shadow-[0_6px_20px_-8px_oklch(0.52_0.24_264_/_0.6)] hover:shadow-[0_10px_28px_-8px_oklch(0.52_0.24_264_/_0.7)] hover:-translate-y-0.5 transition-all"
+            >
+              Book a Free Call
+              <ArrowUpRight className="size-4" />
+            </Link>
+            <button
+              aria-label="Toggle menu"
+              onClick={() => setOpen((v) => !v)}
+              className="md:hidden size-10 grid place-items-center rounded-full ring-1 ring-border bg-white"
+            >
+              {open ? <X className="size-4" /> : <List className="size-4" />}
+            </button>
+          </div>
+        </div>
+        {open && (
+          <div className="md:hidden border-t border-border bg-background px-6 py-5 flex flex-col gap-4">
+            {links.map((l) => (
+              <Link
+                key={l.to}
+                to={l.to}
+                onClick={() => setOpen(false)}
+                className="text-base font-medium text-foreground"
+              >
+                {l.label}
+              </Link>
+            ))}
+            <Link
+              to="/contact"
+              onClick={() => setOpen(false)}
+              className="mt-2 inline-flex justify-center items-center gap-1.5 font-mont text-sm font-semibold bg-brand-blue text-white py-3 px-5 rounded-full"
+            >
+              Book a Free Call <ArrowUpRight className="size-4" />
+            </Link>
+          </div>
+        )}
+      </nav>
+    </div>
+  );
+}
