@@ -788,7 +788,7 @@ function Visa() {
             title="Visa applications, decoded."
             description="We've supported students through Canada study permits and UK Student Visas, and we know what immigration officers look for — and what hurts an application."
           />
-          <ul className="mt-8 space-y-3">
+          <ul className="mt-8 border-t border-l border-brand-navy/10">
             {[
               "Personalised document checklist for your profile",
               "Statement of purpose & study plan review",
@@ -796,8 +796,8 @@ function Visa() {
               "Biometrics and interview preparation",
               "Refusal recovery & re-application strategy",
             ].map((p) => (
-              <li key={p} className="flex items-start gap-3 text-sm">
-                <span className="size-5 rounded-full bg-brand-blue-soft text-brand-blue grid place-items-center mt-0.5">
+              <li key={p} className="flex items-start gap-3 text-sm p-4 border-r border-b border-brand-navy/10">
+                <span className="size-5 bg-brand-blue-soft text-brand-blue grid place-items-center mt-0.5 shrink-0">
                   <Check className="size-3" weight="bold" />
                 </span>
                 <span className="text-foreground">{p}</span>
@@ -805,7 +805,7 @@ function Visa() {
             ))}
           </ul>
         </div>
-        <div className="bg-brand-navy text-white rounded-3xl p-10 shadow-2xl">
+        <div className="bg-brand-navy text-white p-10 border border-brand-navy">
           <ShieldCheck className="size-10 text-brand-blue mb-5" weight="duotone" />
           <div className="font-display text-4xl md:text-5xl font-light tracking-[-0.03em] mb-3 leading-tight">
             We won&apos;t submit until <span className="italic text-brand-blue">it&apos;s ready.</span>
@@ -816,9 +816,10 @@ function Visa() {
           </p>
           <Link
             to="/contact"
-            className="inline-flex items-center bg-white text-brand-navy py-2.5 px-5 rounded-md font-mont text-sm font-semibold hover:bg-white/90"
+            className="group/btn inline-flex items-center justify-between gap-6 py-3 px-4 font-mont text-xs font-bold uppercase tracking-widest text-brand-navy bg-white border border-white hover:bg-transparent hover:text-white transition-colors"
           >
             Speak to a Visa Advisor
+            <ArrowRight className="size-4 group-hover/btn:translate-x-1 transition-transform" />
           </Link>
         </div>
       </div>
