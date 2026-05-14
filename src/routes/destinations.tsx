@@ -126,7 +126,7 @@ function Country({
             loading="lazy"
             width={1280}
             height={896}
-            className="w-full aspect-[4/3] object-cover rounded-2xl shadow-xl ring-1 ring-black/5"
+            className="w-full aspect-[4/3] object-cover border border-brand-navy/15 shadow-[0_28px_60px_-25px_oklch(0.16_0.04_265_/_0.45)]"
           />
         </div>
         <div>
