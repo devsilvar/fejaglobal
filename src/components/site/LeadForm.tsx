@@ -46,9 +46,7 @@ export function LeadForm({
       )}
       <button
         type="submit"
-        className={`md:col-span-2 mt-2 bg-brand-blue text-primary-foreground font-mont font-bold uppercase tracking-widest text-xs shadow-lg shadow-brand-blue/20 hover:bg-brand-navy transition-colors disabled:opacity-60 ${
-          isUnderline ? "py-4 rounded-sm" : "py-3 rounded-lg text-sm normal-case tracking-normal"
-        }`}
+        className="md:col-span-2 mt-2 bg-brand-blue text-primary-foreground font-mont font-bold uppercase tracking-widest text-xs shadow-lg shadow-brand-blue/20 hover:bg-brand-navy transition-colors disabled:opacity-60 py-4 rounded-lg"
         disabled={submitted}
       >
         {submitted ? "We'll be in touch within 24 hours ✓" : "Book My Free Discovery Call"}
