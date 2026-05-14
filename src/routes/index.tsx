@@ -270,26 +270,35 @@ function Hero() {
 }
 
 const partners = [
-  "UNIVERSITY OF TORONTO",
-  "UCL",
-  "MCGILL",
-  "UNIVERSITY OF MANCHESTER",
-  "UBC",
-  "UNIVERSITY OF EDINBURGH",
+  { name: "University of Toronto", domain: "utoronto.ca" },
+  { name: "UCL", domain: "ucl.ac.uk" },
+  { name: "McGill University", domain: "mcgill.ca" },
+  { name: "University of Manchester", domain: "manchester.ac.uk" },
+  { name: "University of British Columbia", domain: "ubc.ca" },
+  { name: "University of Edinburgh", domain: "ed.ac.uk" },
 ];
 
 function TrustStrip() {
   return (
-    <section className="py-10 border-y border-border bg-white">
+    <section className="py-12 border-y border-border bg-white">
       <div className="max-w-7xl mx-auto px-6">
-        <p className="font-mont text-center text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground mb-6">
+        <p className="font-mont text-center text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground mb-8">
           We help students apply to leading institutions like
         </p>
-        <div className="flex flex-wrap justify-center md:justify-between items-center gap-x-10 gap-y-4 opacity-60">
+        <div className="grid grid-cols-3 md:grid-cols-6 items-center gap-x-8 gap-y-6">
           {partners.map((p) => (
-            <span key={p} className="font-mont text-sm md:text-base font-semibold tracking-tight text-brand-navy">
-              {p}
-            </span>
+            <div
+              key={p.name}
+              className="flex items-center justify-center h-14 group"
+              title={p.name}
+            >
+              <img
+                src={`https://logo.clearbit.com/${p.domain}`}
+                alt={`${p.name} logo`}
+                loading="lazy"
+                className="max-h-12 max-w-full object-contain grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition duration-300"
+              />
+            </div>
           ))}
         </div>
       </div>
