@@ -311,7 +311,7 @@ function TrustStrip() {
               title={p.name}
             >
               <img
-                src={`https://logo.clearbit.com/${p.domain}`}
+                src={p.logo}
                 alt={`${p.name} logo`}
                 loading="lazy"
                 className="max-h-12 max-w-full object-contain grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition duration-300"
