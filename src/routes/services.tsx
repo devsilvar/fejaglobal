@@ -85,9 +85,9 @@ function ServicesPage() {
           {services.map(({ Icon, title, body, bullets }) => (
             <article
               key={title}
-              className="bg-white p-7 rounded-2xl ring-1 ring-black/5 hover:ring-brand-blue/30 hover:-translate-y-0.5 transition-all"
+              className="bg-white p-7 border border-brand-navy/10 hover:border-brand-navy/40 hover:-translate-y-0.5 hover:shadow-[0_24px_50px_-25px_oklch(0.16_0.04_265_/_0.4)] transition-all"
             >
-              <div className="size-11 rounded-xl bg-brand-blue-soft text-brand-blue grid place-items-center mb-5">
+              <div className="size-11 bg-brand-blue-soft text-brand-blue grid place-items-center mb-5">
                 <Icon className="size-5" weight="duotone" />
               </div>
               <h2 className="text-lg font-semibold text-brand-navy mb-2">{title}</h2>

@@ -43,7 +43,7 @@ function ContactPage() {
 
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-5 gap-10">
-          <div className="lg:col-span-3 bg-white p-8 md:p-10 rounded-3xl ring-1 ring-black/5 shadow-xl">
+          <div className="lg:col-span-3 bg-white p-8 md:p-10 border border-brand-navy/10 shadow-[0_28px_60px_-25px_oklch(0.16_0.04_265_/_0.35)]">
             <h2 className="font-display text-3xl md:text-4xl font-light tracking-[-0.03em] text-brand-navy mb-2 leading-tight">
               Book your free <span className="italic text-brand-blue">consultation</span>
             </h2>
@@ -62,9 +62,9 @@ function ContactPage() {
             />
             <ContactCard Icon={Phone} label="Call us" value="+234 812 345 6789" href="tel:+2348123456789" />
             <ContactCard Icon={EnvelopeSimple} label="Email" value="hello@luminaedu.com" href="mailto:hello@luminaedu.com" />
-            <div className="bg-white p-6 rounded-2xl ring-1 ring-black/5">
+            <div className="bg-white p-6 border border-brand-navy/10">
               <div className="flex items-center gap-3 mb-3">
-                <span className="size-9 rounded-lg bg-brand-blue-soft text-brand-blue grid place-items-center">
+                <span className="size-9 bg-brand-blue-soft text-brand-blue grid place-items-center">
                   <MapPin className="size-4" weight="duotone" />
                 </span>
                 <div className="font-mont text-sm font-semibold text-brand-navy">Offices</div>
@@ -86,7 +86,7 @@ function ContactPage() {
 
       <section className="pb-24">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="aspect-[16/7] w-full rounded-2xl overflow-hidden ring-1 ring-border">
+          <div className="aspect-[16/7] w-full overflow-hidden border border-brand-navy/15 shadow-[0_28px_60px_-25px_oklch(0.16_0.04_265_/_0.35)]">
             <iframe
               title="LuminaEdu Lagos office map"
               src="https://www.google.com/maps?q=Lekki+Phase+1+Lagos&output=embed"
@@ -108,7 +108,7 @@ function ContactPage() {
               { q: "Is the first consultation free?", a: "Yes — 30 minutes with a senior consultant, no obligation." },
               { q: "Can we meet in person?", a: "Yes, at our Lagos or Abuja offices. Virtual sessions also available." },
             ].map((f) => (
-              <div key={f.q} className="bg-white p-6 rounded-xl ring-1 ring-black/5">
+              <div key={f.q} className="bg-white p-6 border border-brand-navy/10 hover:border-brand-navy/30 transition-colors">
                 <dt className="font-medium text-brand-navy mb-1">{f.q}</dt>
                 <dd className="text-sm text-muted-foreground">{f.a}</dd>
               </div>
@@ -138,14 +138,14 @@ function ContactCard({
       href={href}
       target={href.startsWith("http") ? "_blank" : undefined}
       rel="noopener noreferrer"
-      className={`flex items-center gap-4 p-5 rounded-2xl ring-1 transition-shadow ${
+      className={`flex items-center gap-4 p-5 border transition-all hover:-translate-y-0.5 ${
         accent
-          ? "bg-brand-navy text-white ring-brand-navy hover:shadow-xl"
-          : "bg-white ring-black/5 hover:shadow-lg"
+          ? "bg-brand-navy text-white border-brand-navy hover:shadow-[0_20px_40px_-20px_oklch(0.16_0.04_265_/_0.6)]"
+          : "bg-white border-brand-navy/10 hover:border-brand-navy/30"
       }`}
     >
       <span
-        className={`size-10 rounded-lg grid place-items-center ${
+        className={`size-10 grid place-items-center ${
           accent ? "bg-white/10 text-white" : "bg-brand-blue-soft text-brand-blue"
         }`}
       >

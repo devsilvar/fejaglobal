@@ -86,8 +86,8 @@ function AboutPage() {
           <SectionHeading eyebrow="Our Team" title="Senior consultants. Real attention." />
           <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {team.map((t) => (
-              <div key={t.name} className="bg-white p-6 rounded-2xl ring-1 ring-black/5">
-                <div className="size-16 rounded-full bg-brand-blue-soft text-brand-blue grid place-items-center text-lg font-semibold mb-4 font-mont">
+              <div key={t.name} className="bg-white p-6 border border-brand-navy/10 hover:border-brand-navy/40 hover:-translate-y-0.5 hover:shadow-[0_24px_50px_-25px_oklch(0.16_0.04_265_/_0.4)] transition-all">
+                <div className="size-16 bg-brand-blue-soft text-brand-blue grid place-items-center text-lg font-semibold mb-4 font-mont">
                   {t.initials}
                 </div>
                 <div className="text-base font-semibold text-brand-navy">{t.name}</div>
