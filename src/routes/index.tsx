@@ -270,12 +270,30 @@ function Hero() {
 }
 
 const partners = [
-  { name: "University of Toronto", domain: "utoronto.ca" },
-  { name: "UCL", domain: "ucl.ac.uk" },
-  { name: "McGill University", domain: "mcgill.ca" },
-  { name: "University of Manchester", domain: "manchester.ac.uk" },
-  { name: "University of British Columbia", domain: "ubc.ca" },
-  { name: "University of Edinburgh", domain: "ed.ac.uk" },
+  {
+    name: "University of Toronto",
+    logo: "https://upload.wikimedia.org/wikipedia/en/thumb/0/04/Utoronto_coa.svg/200px-Utoronto_coa.svg.png",
+  },
+  {
+    name: "UCL",
+    logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/University_College_London_logo.svg/320px-University_College_London_logo.svg.png",
+  },
+  {
+    name: "McGill University",
+    logo: "https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/McGill_University_CoA.svg/200px-McGill_University_CoA.svg.png",
+  },
+  {
+    name: "University of Manchester",
+    logo: "https://upload.wikimedia.org/wikipedia/en/thumb/4/4d/University_of_Manchester_logo.svg/320px-University_of_Manchester_logo.svg.png",
+  },
+  {
+    name: "University of British Columbia",
+    logo: "https://upload.wikimedia.org/wikipedia/en/thumb/c/c0/The_University_of_British_Columbia-Logo.svg/320px-The_University_of_British_Columbia-Logo.svg.png",
+  },
+  {
+    name: "University of Edinburgh",
+    logo: "https://upload.wikimedia.org/wikipedia/en/thumb/7/72/University_of_Edinburgh_ceremonial_roundel.svg/200px-University_of_Edinburgh_ceremonial_roundel.svg.png",
+  },
 ];
 
 function TrustStrip() {
