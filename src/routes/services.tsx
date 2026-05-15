@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { GraduationCap, FileText, Buildings, Sparkle, Users, ChatCircle } from "@phosphor-icons/react";
+import { GraduationCap, FileText, Buildings, Sparkle, Users, ChatCircle, Bank, AirplaneTakeoff, House, BookOpen } from "@phosphor-icons/react";
 
 export const Route = createFileRoute("/services")({
   head: () => ({
@@ -56,6 +56,30 @@ const services = [
     body: "Live mock interviews with structured, candid feedback.",
     bullets: ["Mock interview sessions", "Personalised feedback", "Body-language & delivery"],
   },
+  {
+    Icon: Bank,
+    title: "Tuition Fee Payment",
+    body: "We help you pay universities in CAD and GBP from Nigeria — securely, with the right paper trail for visas.",
+    bullets: ["FX-friendly payment routing", "Receipts that satisfy CAS/LOA", "Refund & reversal support"],
+  },
+  {
+    Icon: AirplaneTakeoff,
+    title: "Flight & Pre-Departure",
+    body: "Flight bookings, packing lists, airport pickup arrangements and a full pre-departure briefing.",
+    bullets: ["Best-fare flight booking", "Pre-departure briefing", "Airport pickup coordination"],
+  },
+  {
+    Icon: House,
+    title: "Accommodation Assistance",
+    body: "On-campus and off-campus housing — vetted listings near your university, with safe payment guidance.",
+    bullets: ["University residence applications", "Verified off-campus options", "Move-in checklist"],
+  },
+  {
+    Icon: BookOpen,
+    title: "IELTS / Test Prep Guidance",
+    body: "Honest advice on which English test to take, score targets, and trusted prep resources.",
+    bullets: ["IELTS / PTE / Duolingo guidance", "Score-target planning", "Recommended prep partners"],
+  },
 ];
 
 function ServicesPage() {
@@ -69,7 +93,7 @@ function ServicesPage() {
               Our Services
             </div>
             <h1 className="font-display text-5xl md:text-7xl font-light tracking-[-0.035em] leading-[1] text-balance text-brand-navy">
-              Six services. One outcome:{" "}
+              Ten services. One outcome:{" "}
               <span className="italic text-brand-blue">you, on campus.</span>
             </h1>
             <p className="mt-6 text-lg text-muted-foreground max-w-2xl leading-relaxed">
