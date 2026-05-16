@@ -113,7 +113,7 @@ function ArticlePage() {
         </div>
 
         <div className="space-y-10">
-          {article.body.map((section, i) => (
+          {article.body.map((section: { heading?: string; paragraphs: string[] }, i: number) => (
             <section key={i}>
               {section.heading && (
                 <h2 className="font-display text-2xl md:text-3xl font-medium text-brand-navy mb-4 tracking-[-0.015em]">
@@ -121,7 +121,7 @@ function ArticlePage() {
                 </h2>
               )}
               <div className="space-y-5">
-                {section.paragraphs.map((p, j) => (
+                {section.paragraphs.map((p: string, j: number) => (
                   <p
                     key={j}
                     className="text-base md:text-lg text-foreground/85 leading-[1.75]"
