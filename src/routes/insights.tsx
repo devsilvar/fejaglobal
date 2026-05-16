@@ -1,6 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
 import { SectionHeading } from "@/components/site/SectionHeading";
-import { ArrowRight, Calendar } from "@phosphor-icons/react";
+import { ArrowRight, Calendar, CheckCircle } from "@phosphor-icons/react";
+import { articles } from "@/lib/insights-data";
 
 export const Route = createFileRoute("/insights")({
   head: () => ({
@@ -23,57 +25,6 @@ export const Route = createFileRoute("/insights")({
   }),
   component: InsightsPage,
 });
-
-const articles = [
-  {
-    category: "Canada",
-    title: "The 2026 Canadian Study Permit: what actually changed",
-    excerpt:
-      "PAL letters, financial proof updates and what IRCC's new caps mean for Nigerian applicants this intake.",
-    date: "May 12, 2026",
-    read: "8 min read",
-  },
-  {
-    category: "United Kingdom",
-    title: "UK Graduate Route in 2026 — still worth it?",
-    excerpt:
-      "A clear-eyed look at the 2-year post-study visa, salary realities and which courses still convert to long-term roles.",
-    date: "May 5, 2026",
-    read: "6 min read",
-  },
-  {
-    category: "Scholarships",
-    title: "Six fully-funded scholarships open to Nigerian students this year",
-    excerpt:
-      "Chevening, Commonwealth, Vanier, Trudeau, Rhodes and Mastercard Foundation — eligibility, deadlines and what wins.",
-    date: "April 28, 2026",
-    read: "10 min read",
-  },
-  {
-    category: "Applications",
-    title: "How to write an SOP that actually gets read",
-    excerpt:
-      "The three-paragraph structure our consultants use to turn average essays into offers from top-30 universities.",
-    date: "April 14, 2026",
-    read: "7 min read",
-  },
-  {
-    category: "Visa",
-    title: "Proof of funds, demystified",
-    excerpt:
-      "GIC, sponsor letters, Form A and bank statements — what each visa officer is actually looking for.",
-    date: "April 2, 2026",
-    read: "9 min read",
-  },
-  {
-    category: "Life Abroad",
-    title: "Your first 30 days in Canada: a survival checklist",
-    excerpt:
-      "SIN number, banking, transit cards, SIM, accommodation and where to find Nigerian community.",
-    date: "March 21, 2026",
-    read: "5 min read",
-  },
-];
 
 function InsightsPage() {
   return (
@@ -100,8 +51,10 @@ function InsightsPage() {
       <section className="py-24">
         <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {articles.map((a) => (
-            <article
-              key={a.title}
+            <Link
+              key={a.slug}
+              to="/insights/$slug"
+              params={{ slug: a.slug }}
               className="group bg-white border border-brand-navy/10 hover:border-brand-navy/40 hover:-translate-y-0.5 hover:shadow-[0_24px_50px_-25px_oklch(0.16_0.04_265_/_0.4)] transition-all p-7 flex flex-col"
             >
               <div className="font-mont text-[10px] font-bold uppercase tracking-[0.18em] text-brand-blue mb-4">
@@ -122,26 +75,68 @@ function InsightsPage() {
                 </div>
                 <ArrowRight className="size-4 text-brand-blue group-hover:translate-x-1 transition-transform" />
               </div>
-            </article>
+            </Link>
           ))}
         </div>
       </section>
 
       <section className="py-20 bg-secondary/40">
-        <div className="max-w-3xl mx-auto px-6 text-center">
+        <div className="max-w-2xl mx-auto px-6 text-center">
           <SectionHeading
             align="center"
             title="Get new guides in your inbox."
             description="One short email a month. No spam — just the next deadline you should know about."
           />
-          <Link
-            to="/contact"
-            className="inline-flex mt-8 items-center bg-brand-blue text-white py-3.5 px-6 rounded-full font-mont font-semibold shadow-[0_10px_30px_-10px_oklch(0.52_0.24_264_/_0.55)] hover:-translate-y-0.5 transition-all"
-          >
-            Subscribe
-          </Link>
+          <SubscribeForm />
         </div>
       </section>
     </>
+  );
+}
+
+function SubscribeForm() {
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<"idle" | "submitting" | "success">("idle");
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email || status !== "idle") return;
+    setStatus("submitting");
+    // Dummy: simulate save + confirmation email
+    setTimeout(() => setStatus("success"), 700);
+  };
+
+  if (status === "success") {
+    return (
+      <div className="mt-8 inline-flex items-center gap-3 bg-white border border-brand-navy/10 rounded-full pl-5 pr-6 py-3 shadow-sm">
+        <CheckCircle weight="fill" className="size-5 text-brand-blue" />
+        <span className="font-mont text-sm text-brand-navy">
+          You're in. Check <span className="font-semibold">{email}</span> for a confirmation.
+        </span>
+      </div>
+    );
+  }
+
+  return (
+    <form
+      onSubmit={handleSubmit}
+      className="mt-8 mx-auto flex flex-col sm:flex-row gap-3 max-w-md"
+    >
+      <input
+        type="email"
+        required
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="you@email.com"
+        className="flex-1 bg-white border border-brand-navy/15 rounded-full px-5 py-3.5 text-sm font-mont text-brand-navy placeholder:text-muted-foreground/60 focus:outline-none focus:border-brand-blue focus:ring-2 focus:ring-brand-blue/20 transition"
+      />
+      <button
+        type="submit"
+        disabled={status === "submitting"}
+        className="inline-flex items-center justify-center bg-brand-blue text-white py-3.5 px-6 rounded-full font-mont font-semibold text-sm shadow-[0_10px_30px_-10px_oklch(0.52_0.24_264_/_0.55)] hover:-translate-y-0.5 transition-all disabled:opacity-70 disabled:hover:translate-y-0"
+      >
+        {status === "submitting" ? "Subscribing…" : "Subscribe"}
+      </button>
+    </form>
   );
 }
