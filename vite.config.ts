@@ -5,7 +5,7 @@ import tailwindcss from "@tailwindcss/vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 import path from "node:path";
 
-// TanStack Start SSR configuration for Vercel/Netlify hosting.
+// TanStack Start configuration - SPA mode for static Vercel hosting
 export default defineConfig(({ command }) => ({
   resolve: {
     alias: {
@@ -23,7 +23,10 @@ export default defineConfig(({ command }) => ({
     tsconfigPaths(),
     tailwindcss(),
     tanstackStart({
-      server: { entry: "server" },
+      // SPA mode generates static HTML for static hosting
+      tsr: {
+        spa: true,
+      },
     }),
     viteReact(),
   ],
