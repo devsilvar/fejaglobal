@@ -9,9 +9,12 @@ import {
 } from "@tanstack/react-router";
 
 import appCss from "../styles.css?url";
+import heroStudent from "@/assets/hero-student.jpg";
+import ogImage from "@/assets/hero-student.jpg";
 import { Navbar } from "@/components/site/Navbar";
 import { Footer } from "@/components/site/Footer";
 import { FloatingWhatsApp } from "@/components/site/FloatingWhatsApp";
+import { Toaster } from "sonner";
 
 function NotFoundComponent() {
   return (
@@ -75,29 +78,43 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "LuminaEdu — Study Abroad in Canada & UK" },
+      { title: "Feja Global — Study Abroad in Canada & UK" },
       { name: "description", content: "Premium consultancy helping African students study in Canada and the UK." },
-      { name: "author", content: "LuminaEdu" },
-      { property: "og:title", content: "LuminaEdu — Study Abroad in Canada & UK" },
+      { name: "author", content: "Feja Global" },
+      { property: "og:title", content: "Feja Global — Study Abroad in Canada & UK" },
       { property: "og:description", content: "Premium consultancy helping African students study in Canada and the UK." },
       { property: "og:type", content: "website" },
-      { property: "og:site_name", content: "LuminaEdu" },
-      { name: "twitter:card", content: "summary" },
-      { name: "twitter:title", content: "LuminaEdu — Study Abroad in Canada & UK" },
+      { property: "og:site_name", content: "Feja Global" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Feja Global — Study Abroad in Canada & UK" },
       { name: "twitter:description", content: "Premium consultancy helping African students study in Canada and the UK." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/e558fa74-7559-449a-acac-58e94bfab962/id-preview-e30650d3--c50aef80-e10f-4fd6-8c29-2ca99390f852.lovable.app-1778779861669.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/e558fa74-7559-449a-acac-58e94bfab962/id-preview-e30650d3--c50aef80-e10f-4fd6-8c29-2ca99390f852.lovable.app-1778779861669.png" },
+      { property: "og:image", content: ogImage },
+      { name: "twitter:image", content: ogImage },
     ],
     links: [
+      { rel: "stylesheet", href: appCss },
+      // Preload the LCP hero image so the browser fetches it in parallel with the HTML
+      // instead of waiting for React to hydrate /index.tsx and discover the <img src=...>.
       {
-        rel: "stylesheet",
-        href: appCss,
+        rel: "preload",
+        as: "image",
+        href: heroStudent,
+        fetchpriority: "high",
       },
-      { rel: "preconnect", href: "https://fonts.googleapis.com" },
-      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+    ],
+    scripts: [
       {
-        rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Montserrat:wght@400;500;600;700;800&display=swap",
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: "Feja Global",
+          url: "https://fejaglobal.com",
+          logo: "https://fejaglobal.com/og.png",
+          description:
+            "Premium consultancy helping African students study in Canada and the UK.",
+          areaServed: ["NG", "CA", "GB"],
+        }),
       },
     ],
   }),
@@ -132,6 +149,7 @@ function RootComponent() {
       </main>
       <Footer />
       <FloatingWhatsApp />
+      <Toaster richColors position="top-center" />
     </QueryClientProvider>
   );
 }

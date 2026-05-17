@@ -66,12 +66,37 @@ async function normalizeCatastrophicSsrResponse(response: Response): Promise<Res
   return brandedErrorResponse();
 }
 
+// Tell Cloudflare's edge to cache successful HTML for 5 minutes and serve
+// stale-while-revalidate for 24h. Vite content-hashes static assets so they
+// can be held indefinitely. Skips any response that already declares Cache-Control.
+function applyEdgeCache(response: Response): Response {
+  if (response.status !== 200) return response;
+  if (response.headers.has("cache-control")) return response;
+
+  const contentType = response.headers.get("content-type") ?? "";
+  const url = new URL(response.url || "http://x/");
+  const isAsset = url.pathname.startsWith("/assets/") || url.pathname.startsWith("/_build/");
+
+  const cacheControl = isAsset
+    ? "public, max-age=31536000, immutable"
+    : contentType.includes("text/html")
+      ? "public, max-age=0, s-maxage=300, stale-while-revalidate=86400"
+      : null;
+
+  if (!cacheControl) return response;
+  // Response headers are immutable on some runtimes — clone to mutate.
+  const headers = new Headers(response.headers);
+  headers.set("cache-control", cacheControl);
+  return new Response(response.body, { status: response.status, statusText: response.statusText, headers });
+}
+
 export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
     try {
       const handler = await getServerEntry();
       const response = await handler.fetch(request, env, ctx);
-      return await normalizeCatastrophicSsrResponse(response);
+      const normalised = await normalizeCatastrophicSsrResponse(response);
+      return applyEdgeCache(normalised);
     } catch (error) {
       console.error(error);
       return brandedErrorResponse();

@@ -1,16 +1,22 @@
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { List, X, ArrowUpRight } from "@phosphor-icons/react";
+import { List } from "@phosphor-icons/react/dist/ssr/List";
+import { X } from "@phosphor-icons/react/dist/ssr/X";
+import { ArrowUpRight } from "@phosphor-icons/react/dist/ssr/ArrowUpRight";
+import { bookingTarget } from "@/lib/site-config";
 
 const links = [
   { to: "/destinations", label: "Destinations" },
   { to: "/services", label: "Services" },
+  { to: "/scholarships", label: "Scholarships" },
+  { to: "/insights", label: "Insights" },
   { to: "/about", label: "About" },
   { to: "/contact", label: "Contact" },
 ] as const;
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
+  const booking = bookingTarget();
   return (
     <div className="sticky top-0 z-50">
       {/* Announcement bar */}
@@ -32,7 +38,7 @@ export function Navbar() {
                 <span className="absolute -right-1 -bottom-1 size-2 rounded-full bg-brand-peach" />
               </span>
               <span className="font-display text-xl font-medium tracking-tight text-brand-navy">
-                lumina<span className="italic text-brand-blue">edu</span>
+                feja
               </span>
             </Link>
             <div className="hidden md:flex gap-7">
@@ -49,13 +55,25 @@ export function Navbar() {
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <Link
-              to="/contact"
-              className="hidden md:inline-flex items-center gap-1.5 font-mont text-sm font-semibold bg-brand-blue text-white py-2.5 px-5 rounded-full shadow-[0_6px_20px_-8px_oklch(0.52_0.24_264_/_0.6)] hover:shadow-[0_10px_28px_-8px_oklch(0.52_0.24_264_/_0.7)] hover:-translate-y-0.5 transition-all"
-            >
-              Book a Free Call
-              <ArrowUpRight className="size-4" />
-            </Link>
+            {booking.external ? (
+              <a
+                href={booking.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hidden md:inline-flex items-center gap-1.5 font-mont text-sm font-semibold bg-brand-blue text-white py-2.5 px-5 rounded-full shadow-[0_6px_20px_-8px_oklch(0.52_0.24_264_/_0.6)] hover:shadow-[0_10px_28px_-8px_oklch(0.52_0.24_264_/_0.7)] hover:-translate-y-0.5 transition-all"
+              >
+                Book a Free Call
+                <ArrowUpRight className="size-4" />
+              </a>
+            ) : (
+              <Link
+                to="/contact"
+                className="hidden md:inline-flex items-center gap-1.5 font-mont text-sm font-semibold bg-brand-blue text-white py-2.5 px-5 rounded-full shadow-[0_6px_20px_-8px_oklch(0.52_0.24_264_/_0.6)] hover:shadow-[0_10px_28px_-8px_oklch(0.52_0.24_264_/_0.7)] hover:-translate-y-0.5 transition-all"
+              >
+                Book a Free Call
+                <ArrowUpRight className="size-4" />
+              </Link>
+            )}
             <button
               aria-label="Toggle menu"
               onClick={() => setOpen((v) => !v)}
@@ -77,13 +95,25 @@ export function Navbar() {
                 {l.label}
               </Link>
             ))}
-            <Link
-              to="/contact"
-              onClick={() => setOpen(false)}
-              className="mt-2 inline-flex justify-center items-center gap-1.5 font-mont text-sm font-semibold bg-brand-blue text-white py-3 px-5 rounded-full"
-            >
-              Book a Free Call <ArrowUpRight className="size-4" />
-            </Link>
+            {booking.external ? (
+              <a
+                href={booking.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setOpen(false)}
+                className="mt-2 inline-flex justify-center items-center gap-1.5 font-mont text-sm font-semibold bg-brand-blue text-white py-3 px-5 rounded-full"
+              >
+                Book a Free Call <ArrowUpRight className="size-4" />
+              </a>
+            ) : (
+              <Link
+                to="/contact"
+                onClick={() => setOpen(false)}
+                className="mt-2 inline-flex justify-center items-center gap-1.5 font-mont text-sm font-semibold bg-brand-blue text-white py-3 px-5 rounded-full"
+              >
+                Book a Free Call <ArrowUpRight className="size-4" />
+              </Link>
+            )}
           </div>
         )}
       </nav>

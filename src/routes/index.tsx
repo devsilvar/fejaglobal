@@ -5,42 +5,49 @@ import canadaImg from "@/assets/canada.jpg";
 import ukImg from "@/assets/uk.jpg";
 import { LeadForm } from "@/components/site/LeadForm";
 import { SectionHeading } from "@/components/site/SectionHeading";
-import {
-  GraduationCap,
-  FileText,
-  AirplaneTakeoff,
-  Buildings,
-  Sparkle,
-  ShieldCheck,
-  Globe,
-  Users,
-  CaretDown,
-  Check,
-  Star,
-  Trophy,
-  Briefcase,
-  Code,
-  Stethoscope,
-  PaintBrush,
-  Atom,
-  Scales,
-  GoogleLogo,
-  ArrowLeft,
-  ArrowRight,
-} from "@phosphor-icons/react";
+import { bookingTarget } from "@/lib/site-config";
+// SSR-safe per-icon imports — keeps Vite's tree-shaker honest and avoids
+// shipping the entire Phosphor barrel in the route chunk.
+import { GraduationCap } from "@phosphor-icons/react/dist/ssr/GraduationCap";
+import { FileText } from "@phosphor-icons/react/dist/ssr/FileText";
+import { AirplaneTakeoff } from "@phosphor-icons/react/dist/ssr/AirplaneTakeoff";
+import { Buildings } from "@phosphor-icons/react/dist/ssr/Buildings";
+import { Sparkle } from "@phosphor-icons/react/dist/ssr/Sparkle";
+import { ShieldCheck } from "@phosphor-icons/react/dist/ssr/ShieldCheck";
+import { Globe } from "@phosphor-icons/react/dist/ssr/Globe";
+import { Users } from "@phosphor-icons/react/dist/ssr/Users";
+import { CaretDown } from "@phosphor-icons/react/dist/ssr/CaretDown";
+import { Check } from "@phosphor-icons/react/dist/ssr/Check";
+import { Star } from "@phosphor-icons/react/dist/ssr/Star";
+import { Trophy } from "@phosphor-icons/react/dist/ssr/Trophy";
+import { Briefcase } from "@phosphor-icons/react/dist/ssr/Briefcase";
+import { Code } from "@phosphor-icons/react/dist/ssr/Code";
+import { Stethoscope } from "@phosphor-icons/react/dist/ssr/Stethoscope";
+import { PaintBrush } from "@phosphor-icons/react/dist/ssr/PaintBrush";
+import { Atom } from "@phosphor-icons/react/dist/ssr/Atom";
+import { Scales } from "@phosphor-icons/react/dist/ssr/Scales";
+import googleLogo from "@/assets/google-logo.png";
+import uoftLogo from "@/assets/university of toronto.png";
+import uclLogo from "@/assets/ucl university logo.png";
+import mcgillLogo from "@/assets/mcgill university.png";
+import manchesterLogo from "@/assets/university of machesters.png";
+import ubcLogo from "@/assets/university of bristich columbia.png";
+import edinburghLogo from "@/assets/universitt of edinburgh.png";
+import { ArrowLeft } from "@phosphor-icons/react/dist/ssr/ArrowLeft";
+import { ArrowRight } from "@phosphor-icons/react/dist/ssr/ArrowRight";
 import { useEffect, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "LuminaEdu — Study in Canada & the UK from Nigeria" },
+      { title: "Feja Global — Study in Canada & the UK from Nigeria" },
       {
         name: "description",
         content:
           "Founder-led education consultancy guiding Nigerian and African students through admissions, scholarships and visas to universities in Canada and the UK.",
       },
-      { property: "og:title", content: "LuminaEdu — Study in Canada & the UK" },
+      { property: "og:title", content: "Feja Global — Study in Canada & the UK" },
       {
         property: "og:description",
         content:
@@ -49,6 +56,20 @@ export const Route = createFileRoute("/")({
       { property: "og:url", content: "/" },
     ],
     links: [{ rel: "canonical", href: "/" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: faqs.map((f) => ({
+            "@type": "Question",
+            name: f.q,
+            acceptedAnswer: { "@type": "Answer", text: f.a },
+          })),
+        }),
+      },
+    ],
   }),
   component: Index,
 });
@@ -74,6 +95,7 @@ function Index() {
 }
 
 function Hero() {
+  const booking = bookingTarget();
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-brand-cream via-background to-background">
       {/* World-map dot backdrop */}
@@ -131,15 +153,29 @@ function Hero() {
           </p>
 
           <div className="flex flex-wrap gap-3 items-center mb-12">
-            <Link
-              to="/contact"
-              className="group inline-flex items-center gap-2 bg-brand-navy text-white py-4 px-7 rounded-full font-mont font-semibold shadow-[0_12px_30px_-10px_oklch(0.16_0.04_265_/_0.45)] hover:shadow-[0_18px_44px_-12px_oklch(0.16_0.04_265_/_0.6)] hover:-translate-y-0.5 transition-all"
-            >
-              Schedule a meeting
-              <span className="grid place-items-center size-5 rounded-full bg-white/15 group-hover:bg-white/25 transition-colors">
-                →
-              </span>
-            </Link>
+            {booking.external ? (
+              <a
+                href={booking.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center gap-2 bg-brand-navy text-white py-4 px-7 rounded-full font-mont font-semibold shadow-[0_12px_30px_-10px_oklch(0.16_0.04_265_/_0.45)] hover:shadow-[0_18px_44px_-12px_oklch(0.16_0.04_265_/_0.6)] hover:-translate-y-0.5 transition-all"
+              >
+                Schedule a meeting
+                <span className="grid place-items-center size-5 rounded-full bg-white/15 group-hover:bg-white/25 transition-colors">
+                  →
+                </span>
+              </a>
+            ) : (
+              <Link
+                to="/contact"
+                className="group inline-flex items-center gap-2 bg-brand-navy text-white py-4 px-7 rounded-full font-mont font-semibold shadow-[0_12px_30px_-10px_oklch(0.16_0.04_265_/_0.45)] hover:shadow-[0_18px_44px_-12px_oklch(0.16_0.04_265_/_0.6)] hover:-translate-y-0.5 transition-all"
+              >
+                Schedule a meeting
+                <span className="grid place-items-center size-5 rounded-full bg-white/15 group-hover:bg-white/25 transition-colors">
+                  →
+                </span>
+              </Link>
+            )}
             <Link
               to="/destinations"
               className="inline-flex items-center gap-2 text-brand-navy py-4 px-6 rounded-full font-mont font-semibold ring-1 ring-brand-navy/15 hover:ring-brand-navy/30 hover:bg-white transition-all"
@@ -184,11 +220,17 @@ function Hero() {
                 borderRadius: "200px 32px 32px 32px",
               }}
             >
+              {/* LCP image. Preloaded in __root.tsx head with fetchpriority=high.
+                  To enable AVIF/WebP: run squoosh on hero-student.jpg → place
+                  hero-student.avif and hero-student.webp next to it in src/assets,
+                  then wrap this img in <picture><source ... /></picture>. */}
               <img
                 src={heroStudent}
                 alt="Confident African student on a modern university campus"
                 width={1024}
                 height={1280}
+                fetchPriority="high"
+                decoding="async"
                 className="size-full object-cover"
               />
               {/* Soft gradient overlay */}
@@ -270,54 +312,45 @@ function Hero() {
 }
 
 const partners = [
-  {
-    name: "University of Toronto",
-    logo: "https://upload.wikimedia.org/wikipedia/en/thumb/0/04/Utoronto_coa.svg/200px-Utoronto_coa.svg.png",
-  },
-  {
-    name: "UCL",
-    logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/University_College_London_logo.svg/320px-University_College_London_logo.svg.png",
-  },
-  {
-    name: "McGill University",
-    logo: "https://upload.wikimedia.org/wikipedia/en/thumb/9/9e/McGill_University_CoA.svg/200px-McGill_University_CoA.svg.png",
-  },
-  {
-    name: "University of Manchester",
-    logo: "https://upload.wikimedia.org/wikipedia/en/thumb/4/4d/University_of_Manchester_logo.svg/320px-University_of_Manchester_logo.svg.png",
-  },
-  {
-    name: "University of British Columbia",
-    logo: "https://upload.wikimedia.org/wikipedia/en/thumb/c/c0/The_University_of_British_Columbia-Logo.svg/320px-The_University_of_British_Columbia-Logo.svg.png",
-  },
-  {
-    name: "University of Edinburgh",
-    logo: "https://upload.wikimedia.org/wikipedia/en/thumb/7/72/University_of_Edinburgh_ceremonial_roundel.svg/200px-University_of_Edinburgh_ceremonial_roundel.svg.png",
-  },
+  { name: "University of Toronto", logo: uoftLogo },
+  { name: "UCL", logo: uclLogo },
+  { name: "McGill University", logo: mcgillLogo },
+  { name: "University of Manchester", logo: manchesterLogo },
+  { name: "University of British Columbia", logo: ubcLogo },
+  { name: "University of Edinburgh", logo: edinburghLogo },
 ];
 
 function TrustStrip() {
+  const loopPartners = [...partners, ...partners];
   return (
-    <section className="py-12 border-y border-border bg-white">
+    <section className="py-12 border-y border-border bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
         <p className="font-mont text-center text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground mb-8">
           We help students apply to leading institutions like
         </p>
-        <div className="grid grid-cols-3 md:grid-cols-6 items-center gap-x-8 gap-y-6">
-          {partners.map((p) => (
-            <div
-              key={p.name}
-              className="flex items-center justify-center h-14 group"
-              title={p.name}
-            >
-              <img
-                src={p.logo}
-                alt={`${p.name} logo`}
-                loading="lazy"
-                className="max-h-12 max-w-full object-contain grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition duration-300"
-              />
-            </div>
-          ))}
+        <div className="relative">
+          <div className="flex items-center gap-16 animate-marquee-right">
+            {loopPartners.map((p, i) => (
+              <div
+                key={`${p.name}-${i}`}
+                className="flex flex-col items-center justify-center shrink-0 w-32"
+                title={p.name}
+              >
+                <img
+                  src={p.logo}
+                  alt={`${p.name} logo`}
+                  loading="lazy"
+                  decoding="async"
+                  width={120}
+                  height={60}
+                  className="max-h-14 max-w-full object-contain mb-2"
+                />
+                <span className="font-mont text-[10px] font-semibold text-brand-navy text-center leading-tight">
+                  {p.name}
+                </span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -433,6 +466,7 @@ function DestinationCard({
           src={img}
           alt={`Study in ${title}`}
           loading="lazy"
+          decoding="async"
           width={1280}
           height={720}
           className="size-full object-cover group-hover:scale-105 transition-transform duration-700"
@@ -678,7 +712,13 @@ function Testimonials() {
           />
           <div className="flex flex-wrap items-stretch gap-3">
             <div className="flex items-center gap-3 bg-white px-5 py-4 border border-brand-navy/10">
-              <GoogleLogo className="size-7" weight="duotone" />
+              <img
+                src={googleLogo}
+                alt="Google"
+                width={24}
+                height={24}
+                className="size-7 object-contain"
+              />
               <div>
                 <div className="flex items-baseline gap-2">
                   <span className="font-display text-2xl font-medium text-brand-navy leading-none">4.9</span>
@@ -869,7 +909,7 @@ function WhyUs() {
         <div className="grid lg:grid-cols-12 gap-12 pb-12 border-b border-white/10">
           <div className="lg:col-span-5">
             <div className="font-mont text-[11px] font-bold uppercase tracking-[0.2em] text-brand-blue mb-4">
-              Why LuminaEdu
+              Why Feja Global
             </div>
             <h2 className="font-display text-4xl md:text-5xl font-semibold tracking-[-0.02em] text-balance leading-[1.05]">
               A different kind of <span className="italic font-normal">consultancy.</span>

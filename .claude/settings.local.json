@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir -p \"C:/Users/pc/.claude/plans\")",
+      "Read(//c/Users/pc/.claude/plans/**)",
+      "Bash(npx tsc *)",
+      "Bash(npm run *)",
+      "Bash(npm install *)",
+      "Bash(npx eslint *)",
+      "Bash(grep -v \"Delete \\\\`␍\\\\`\\\\|prettier/prettier\")",
+      "WebFetch(domain:images.unsplash.com)",
+      "Bash(curl *)",
+      "Bash(Get-ChildItem -Path src/assets/google-logo.png)",
+      "Bash(Select-Object Name, Length)",
+      "Bash(xxd)",
+      "WebFetch(domain:commons.wikimedia.org)",
+      "Bash(npx vite *)",
+      "Bash(npm ls *)",
+      "Bash(npm search *)",
+      "Bash(npm view *)",
+      "Bash(npm uninstall *)",
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\pc\\\\Desktop\\\\github-projects\\\\fejaglobal\\\\dist\" -Recurse)",
+      "Bash(Select-Object FullName)",
+      "Bash(Sort-Object FullName)"
+    ]
+  }
+}

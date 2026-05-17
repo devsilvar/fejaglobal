@@ -1,6 +1,28 @@
-import { WhatsappLogo } from "@phosphor-icons/react";
+import { useEffect, useState } from "react";
+import { WhatsappLogo } from "@phosphor-icons/react/dist/ssr/WhatsappLogo";
+import { siteConfig } from "@/lib/site-config";
 
 export function FloatingWhatsApp() {
+  // Lazy-mount after idle so this fixed-position widget never competes with LCP.
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    type IdleWindow = Window & {
+      requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number;
+    };
+    const w = window as IdleWindow;
+    const handle =
+      w.requestIdleCallback?.(() => setMounted(true), { timeout: 1500 }) ??
+      window.setTimeout(() => setMounted(true), 500);
+    return () => {
+      // requestIdleCallback returns a handle, setTimeout returns a number — both
+      // are safe to pass to clearTimeout in browsers that don't have cancelIdleCallback.
+      window.clearTimeout(handle as number);
+    };
+  }, []);
+
+  if (!mounted) return null;
+
   return (
     <div className="fixed bottom-6 right-6 z-50 group">
       {/* Tooltip bubble */}
@@ -20,7 +42,7 @@ export function FloatingWhatsApp() {
       </div>
 
       <a
-        href="https://wa.me/2348123456789?text=Hi%20LuminaEdu%2C%20I%27d%20like%20a%20free%20consultation."
+        href={siteConfig.contact.whatsappHref}
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Chat with an advisor on WhatsApp"

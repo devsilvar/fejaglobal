@@ -2,12 +2,13 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import canadaImg from "@/assets/canada.jpg";
 import ukImg from "@/assets/uk.jpg";
 import { SectionHeading } from "@/components/site/SectionHeading";
-import { Check } from "@phosphor-icons/react";
+import { PageHero } from "@/components/site/PageHero";
+import { Check } from "@phosphor-icons/react/dist/ssr/Check";
 
 export const Route = createFileRoute("/destinations")({
   head: () => ({
     meta: [
-      { title: "Study Destinations — Canada & the UK | LuminaEdu" },
+      { title: "Study Destinations — Canada & the UK | Feja Global" },
       {
         name: "description",
         content:
@@ -25,22 +26,14 @@ export const Route = createFileRoute("/destinations")({
 function DestinationsPage() {
   return (
     <>
-      <header className="relative overflow-hidden border-b border-border">
-        <div className="absolute inset-0 -z-10 bg-pinstripe opacity-[0.45]" />
-        <div className="max-w-7xl mx-auto px-6 py-20 lg:py-28">
-          <div className="font-mont text-[11px] font-semibold uppercase tracking-[0.18em] text-brand-blue mb-4">
-            Study Destinations
-          </div>
-          <h1 className="font-display text-5xl md:text-7xl font-light tracking-[-0.035em] leading-[1] text-balance text-brand-navy max-w-3xl">
-            Two welcoming education{" "}
-            <span className="italic text-brand-blue">systems.</span>
-          </h1>
-          <p className="mt-6 text-lg text-muted-foreground max-w-2xl leading-relaxed">
-            Whether you choose Canada or the UK, you&apos;ll graduate with a
-            globally respected degree and a clear path to work after study.
-          </p>
-        </div>
-      </header>
+      <PageHero
+        eyebrow="Study Destinations"
+        title="Two welcoming education"
+        accent="systems."
+        description="Whether you choose Canada or the UK, you'll graduate with a globally respected degree and a clear path to work after study."
+        image="destinations"
+      />
+
 
       <Country
         flag="🇨🇦"

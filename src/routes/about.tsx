@@ -1,16 +1,17 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SectionHeading } from "@/components/site/SectionHeading";
+import { PageHero } from "@/components/site/PageHero";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "About — Personal Study-Abroad Guidance | LuminaEdu" },
+      { title: "About — Personal Study-Abroad Guidance | Feja Global" },
       {
         name: "description",
         content:
-          "LuminaEdu is a small, founder-led consultancy helping African students apply to universities in Canada and the UK with care and honesty.",
+          "Feja Global is a small, founder-led consultancy helping African students apply to universities in Canada and the UK with care and honesty.",
       },
-      { property: "og:title", content: "About LuminaEdu" },
+      { property: "og:title", content: "About Feja Global" },
       { property: "og:description", content: "Our mission, our team and how we work." },
       { property: "og:url", content: "/about" },
     ],
@@ -36,25 +37,14 @@ const principles = [
 function AboutPage() {
   return (
     <>
-      <header className="relative overflow-hidden border-b border-border">
-        <div className="absolute inset-0 -z-10 bg-pinstripe opacity-[0.45]" />
-        <div className="max-w-7xl mx-auto px-6 py-20 lg:py-28">
-          <div className="max-w-3xl">
-            <div className="font-mont text-[11px] font-semibold uppercase tracking-[0.18em] text-brand-blue mb-4">
-              About LuminaEdu
-            </div>
-            <h1 className="font-display text-5xl md:text-7xl font-light tracking-[-0.035em] leading-[1] text-balance text-brand-navy">
-              Built to make global education feel{" "}
-              <span className="italic text-brand-blue">personal.</span>
-            </h1>
-            <p className="mt-6 text-lg text-muted-foreground max-w-2xl leading-relaxed">
-              LuminaEdu is a small, founder-led consultancy guiding African
-              students through admissions, scholarships and visas to
-              universities in Canada and the UK.
-            </p>
-          </div>
-        </div>
-      </header>
+      <PageHero
+        eyebrow="About Feja Global"
+        title="Built to make global education feel"
+        accent="personal."
+        description="Feja Global is a small, founder-led consultancy guiding African students through admissions, scholarships and visas to universities in Canada and the UK."
+        image="about"
+      />
+
 
       <section className="py-24">
         <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12">

@@ -1,4 +1,23 @@
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
+
+const leadSchema = z.object({
+  name: z.string().trim().min(2, "Please enter your full name").max(100),
+  email: z.string().trim().email("Enter a valid email"),
+  phone: z.string().trim().min(7, "Enter a valid phone number").max(20),
+  destination: z.enum(["Canada", "United Kingdom", "Both"]),
+  study_level: z
+    .enum(["Undergraduate", "Postgraduate", "PhD", "Foundation / Diploma"])
+    .optional(),
+  // Honeypot — real users never fill this field. Bots usually do.
+  company: z.string().max(0, "Bot detected").optional().or(z.literal("")),
+});
+
+type LeadFormValues = z.infer<typeof leadSchema>;
 
 export function LeadForm({
   compact = false,
@@ -10,33 +29,97 @@ export function LeadForm({
   const [submitted, setSubmitted] = useState(false);
   const isUnderline = variant === "underline";
   const inputClass = isUnderline ? underlineInputCls : inputCls;
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<LeadFormValues>({
+    resolver: zodResolver(leadSchema),
+    defaultValues: {
+      destination: "Canada",
+      study_level: "Postgraduate",
+      company: "",
+    },
+  });
+
+  const onSubmit = handleSubmit(async (values) => {
+    // Honeypot: silently succeed without writing to the DB.
+    if (values.company && values.company.length > 0) {
+      setSubmitted(true);
+      return;
+    }
+
+    const { error } = await supabase.from("leads").insert({
+      name: values.name,
+      email: values.email,
+      phone: values.phone,
+      destination: values.destination,
+      study_level: values.study_level ?? null,
+      source: "website",
+      user_agent:
+        typeof navigator !== "undefined" ? navigator.userAgent.slice(0, 500) : null,
+    });
+
+    if (error) {
+      toast.error("Couldn't send that — try again, or WhatsApp us.");
+      console.error("[LeadForm] supabase insert failed", error);
+      return;
+    }
+
+    toast.success("Got it. A senior consultant will be in touch within 24 hours.");
+    setSubmitted(true);
+  });
+
   return (
     <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        setSubmitted(true);
-      }}
-      className={`grid grid-cols-1 md:grid-cols-2 ${isUnderline ? "gap-x-6 gap-y-7" : "gap-5"}`}
+      onSubmit={onSubmit}
+      className={`grid grid-cols-1 md:grid-cols-2 ${
+        isUnderline ? "gap-x-6 gap-y-7" : "gap-5"
+      }`}
+      noValidate
     >
-      <Field label="Full Name" variant={variant}>
-        <input required type="text" placeholder="Adaeze Okeke" className={inputClass} />
+      {/* Honeypot — visually hidden, off-screen, but technically present so bots fill it. */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          left: "-10000px",
+          width: 1,
+          height: 1,
+          overflow: "hidden",
+        }}
+      >
+        <label>
+          Company (leave blank)
+          <input type="text" tabIndex={-1} autoComplete="off" {...register("company")} />
+        </label>
+      </div>
+
+      <Field label="Full Name" variant={variant} error={errors.name?.message}>
+        <input type="text" placeholder="Adaeze Okeke" className={inputClass} {...register("name")} />
       </Field>
-      <Field label="Email Address" variant={variant}>
-        <input required type="email" placeholder="you@email.com" className={inputClass} />
+      <Field label="Email Address" variant={variant} error={errors.email?.message}>
+        <input type="email" placeholder="you@email.com" className={inputClass} {...register("email")} />
       </Field>
-      <Field label="Phone (WhatsApp)" variant={variant}>
-        <input required type="tel" placeholder="+234 ..." className={inputClass} />
+      <Field label="Phone (WhatsApp)" variant={variant} error={errors.phone?.message}>
+        <input type="tel" placeholder="+234 ..." className={inputClass} {...register("phone")} />
       </Field>
-      <Field label="Destination" variant={variant}>
-        <select className={inputClass} defaultValue="Canada">
+      <Field label="Destination" variant={variant} error={errors.destination?.message}>
+        <select className={inputClass} {...register("destination")}>
           <option>Canada</option>
           <option>United Kingdom</option>
           <option>Both</option>
         </select>
       </Field>
       {!compact && (
-        <Field label="Study Level" className="md:col-span-2" variant={variant}>
-          <select className={inputClass} defaultValue="Postgraduate">
+        <Field
+          label="Study Level"
+          className="md:col-span-2"
+          variant={variant}
+          error={errors.study_level?.message}
+        >
+          <select className={inputClass} {...register("study_level")}>
             <option>Undergraduate</option>
             <option>Postgraduate</option>
             <option>PhD</option>
@@ -47,11 +130,19 @@ export function LeadForm({
       <button
         type="submit"
         className="md:col-span-2 mt-2 bg-brand-blue text-primary-foreground font-mont font-bold uppercase tracking-widest text-xs shadow-lg shadow-brand-blue/20 hover:bg-brand-navy transition-colors disabled:opacity-60 py-4 rounded-full"
-        disabled={submitted}
+        disabled={isSubmitting || submitted}
       >
-        {submitted ? "We'll be in touch within 24 hours ✓" : "Book My Free Discovery Call"}
+        {submitted
+          ? "We'll be in touch within 24 hours ✓"
+          : isSubmitting
+            ? "Sending…"
+            : "Book My Free Discovery Call"}
       </button>
-      <p className={`md:col-span-2 font-mont text-muted-foreground text-center ${isUnderline ? "text-[10px]" : "text-xs"}`}>
+      <p
+        className={`md:col-span-2 font-mont text-muted-foreground text-center ${
+          isUnderline ? "text-[10px]" : "text-xs"
+        }`}
+      >
         By submitting, you agree to be contacted by our advisors. No spam, ever.
       </p>
     </form>
@@ -69,11 +160,13 @@ function Field({
   children,
   className = "",
   variant = "default",
+  error,
 }: {
   label: string;
   children: React.ReactNode;
   className?: string;
   variant?: "default" | "underline";
+  error?: string;
 }) {
   return (
     <div className={`flex flex-col gap-1.5 ${className}`}>
@@ -87,6 +180,9 @@ function Field({
         {label}
       </label>
       {children}
+      {error && (
+        <span className="font-mont text-[11px] text-destructive mt-0.5">{error}</span>
+      )}
     </div>
   );
 }

@@ -1,19 +1,24 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
+import { toast } from "sonner";
 import { SectionHeading } from "@/components/site/SectionHeading";
-import { ArrowRight, Calendar, CheckCircle } from "@phosphor-icons/react";
+import { PageHero } from "@/components/site/PageHero";
+import { ArrowRight } from "@phosphor-icons/react/dist/ssr/ArrowRight";
+import { Calendar } from "@phosphor-icons/react/dist/ssr/Calendar";
+import { CheckCircle } from "@phosphor-icons/react/dist/ssr/CheckCircle";
 import { articles } from "@/lib/insights-data";
+import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/insights")({
   head: () => ({
     meta: [
-      { title: "Insights & Guides — Study in Canada & the UK | LuminaEdu" },
+      { title: "Insights & Guides — Study in Canada & the UK | Feja Global" },
       {
         name: "description",
         content:
           "Honest, founder-written guides on Canadian study permits, UK Graduate Route, scholarships, SOPs and life as an African student abroad.",
       },
-      { property: "og:title", content: "Insights & Guides | LuminaEdu" },
+      { property: "og:title", content: "Insights & Guides | Feja Global" },
       {
         property: "og:description",
         content:
@@ -29,24 +34,14 @@ export const Route = createFileRoute("/insights")({
 function InsightsPage() {
   return (
     <>
-      <header className="relative overflow-hidden border-b border-border">
-        <div className="absolute inset-0 -z-10 bg-pinstripe opacity-[0.45]" />
-        <div className="max-w-7xl mx-auto px-6 py-20 lg:py-28">
-          <div className="max-w-3xl">
-            <div className="font-mont text-[11px] font-semibold uppercase tracking-[0.18em] text-brand-blue mb-4">
-              Insights & Guides
-            </div>
-            <h1 className="font-display text-5xl md:text-7xl font-light tracking-[-0.035em] leading-[1] text-balance text-brand-navy">
-              Honest writing on{" "}
-              <span className="italic text-brand-blue">studying abroad.</span>
-            </h1>
-            <p className="mt-6 text-lg text-muted-foreground max-w-2xl leading-relaxed">
-              Founder-written guides on visas, scholarships and applications —
-              no fluff, no recycled blog posts.
-            </p>
-          </div>
-        </div>
-      </header>
+      <PageHero
+        eyebrow="Insights & Guides"
+        title="Honest writing on"
+        accent="studying abroad."
+        description="Founder-written guides on visas, scholarships and applications — no fluff, no recycled blog posts."
+        image="insights"
+      />
+
 
       <section className="py-24">
         <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -98,12 +93,25 @@ function SubscribeForm() {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "submitting" | "success">("idle");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email || status !== "idle") return;
     setStatus("submitting");
-    // Dummy: simulate save + confirmation email
-    setTimeout(() => setStatus("success"), 700);
+
+    const { error } = await supabase
+      .from("subscribers")
+      .insert({ email: email.trim().toLowerCase(), source: "insights" });
+
+    // 23505 = unique_violation. Already subscribed → treat as success, don't leak
+    // membership status to the user.
+    if (!error || error.code === "23505") {
+      setStatus("success");
+      return;
+    }
+
+    console.error("[SubscribeForm] supabase insert failed", error);
+    toast.error("Couldn't subscribe — please try again in a moment.");
+    setStatus("idle");
   };
 
   if (status === "success") {

@@ -1,17 +1,18 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { SectionHeading } from "@/components/site/SectionHeading";
-import { Trophy, ArrowRight } from "@phosphor-icons/react";
+import { Trophy } from "@phosphor-icons/react/dist/ssr/Trophy";
+import { ArrowRight } from "@phosphor-icons/react/dist/ssr/ArrowRight";
+import { PageHero } from "@/components/site/PageHero";
 
 export const Route = createFileRoute("/scholarships")({
   head: () => ({
     meta: [
-      { title: "Scholarships for African Students — Canada & UK | LuminaEdu" },
+      { title: "Scholarships for African Students — Canada & UK | Feja Global" },
       {
         name: "description",
         content:
           "Fully and partially funded scholarships for African students pursuing undergraduate, master's and PhD study in Canada and the United Kingdom.",
       },
-      { property: "og:title", content: "Scholarships for African Students | LuminaEdu" },
+      { property: "og:title", content: "Scholarships for African Students | Feja Global" },
       {
         property: "og:description",
         content:
@@ -102,24 +103,14 @@ const scholarships = [
 function ScholarshipsPage() {
   return (
     <>
-      <header className="relative overflow-hidden border-b border-border">
-        <div className="absolute inset-0 -z-10 bg-pinstripe opacity-[0.45]" />
-        <div className="max-w-7xl mx-auto px-6 py-20 lg:py-28">
-          <div className="max-w-3xl">
-            <div className="font-mont text-[11px] font-semibold uppercase tracking-[0.18em] text-brand-blue mb-4">
-              Scholarships
-            </div>
-            <h1 className="font-display text-5xl md:text-7xl font-light tracking-[-0.035em] leading-[1] text-balance text-brand-navy">
-              Funding routes for{" "}
-              <span className="italic text-brand-blue">African students.</span>
-            </h1>
-            <p className="mt-6 text-lg text-muted-foreground max-w-2xl leading-relaxed">
-              The major scholarships we help students win each year. We won't
-              waste your time on awards you can't realistically get.
-            </p>
-          </div>
-        </div>
-      </header>
+      <PageHero
+        eyebrow="Scholarships"
+        title="Funding routes for"
+        accent="African students."
+        description="The major scholarships we help students win each year. We won't waste your time on awards you can't realistically get."
+        image="scholarships"
+      />
+
 
       <section className="py-24">
         <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-6">

@@ -1,5 +1,8 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { ArrowLeft, Calendar, Clock, ShareNetwork } from "@phosphor-icons/react";
+import { ArrowLeft } from "@phosphor-icons/react/dist/ssr/ArrowLeft";
+import { Calendar } from "@phosphor-icons/react/dist/ssr/Calendar";
+import { Clock } from "@phosphor-icons/react/dist/ssr/Clock";
+import { ShareNetwork } from "@phosphor-icons/react/dist/ssr/ShareNetwork";
 import { articles, getArticleBySlug } from "@/lib/insights-data";
 
 export const Route = createFileRoute("/insights/$slug")({
@@ -11,20 +14,67 @@ export const Route = createFileRoute("/insights/$slug")({
   head: ({ loaderData }) => {
     const a = loaderData?.article;
     if (!a) return {};
-    const title = `${a.title} | LuminaEdu Insights`;
+    const title = `${a.title} | Feja Global Insights`;
+    const parsedDate = new Date(a.date);
+    const isoDate = Number.isNaN(parsedDate.getTime())
+      ? undefined
+      : parsedDate.toISOString();
+    const meta: Array<{ name?: string; property?: string; content: string }> = [
+      { title } as never,
+      { name: "description", content: a.excerpt },
+      { property: "og:title", content: title },
+      { property: "og:description", content: a.excerpt },
+      { property: "og:type", content: "article" },
+      { property: "og:url", content: `/insights/${a.slug}` },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: title },
+      { name: "twitter:description", content: a.excerpt },
+      { property: "article:author", content: a.author },
+    ];
+    if (isoDate) {
+      meta.push({ property: "article:published_time", content: isoDate });
+    }
     return {
-      meta: [
-        { title },
-        { name: "description", content: a.excerpt },
-        { property: "og:title", content: title },
-        { property: "og:description", content: a.excerpt },
-        { property: "og:type", content: "article" },
-        { property: "og:url", content: `/insights/${a.slug}` },
-        { name: "twitter:card", content: "summary_large_image" },
-        { name: "twitter:title", content: title },
-        { name: "twitter:description", content: a.excerpt },
-      ],
+      meta,
       links: [{ rel: "canonical", href: `/insights/${a.slug}` }],
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            headline: a.title,
+            description: a.excerpt,
+            datePublished: isoDate,
+            dateModified: isoDate,
+            author: { "@type": "Person", name: a.author },
+            publisher: {
+              "@type": "Organization",
+              name: "Feja Global",
+              logo: {
+                "@type": "ImageObject",
+                url: "https://fejaglobal.com/og.png",
+              },
+            },
+            mainEntityOfPage: {
+              "@type": "WebPage",
+              "@id": `https://fejaglobal.com/insights/${a.slug}`,
+            },
+          }),
+        },
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "Home", item: "https://fejaglobal.com/" },
+              { "@type": "ListItem", position: 2, name: "Insights", item: "https://fejaglobal.com/insights" },
+              { "@type": "ListItem", position: 3, name: a.title, item: `https://fejaglobal.com/insights/${a.slug}` },
+            ],
+          }),
+        },
+      ],
     };
   },
   notFoundComponent: () => (

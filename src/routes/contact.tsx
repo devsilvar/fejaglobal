@@ -1,16 +1,21 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { LeadForm } from "@/components/site/LeadForm";
-import { MapPin, Phone, EnvelopeSimple, WhatsappLogo } from "@phosphor-icons/react";
+import { PageHero } from "@/components/site/PageHero";
+import { MapPin } from "@phosphor-icons/react/dist/ssr/MapPin";
+import { Phone } from "@phosphor-icons/react/dist/ssr/Phone";
+import { EnvelopeSimple } from "@phosphor-icons/react/dist/ssr/EnvelopeSimple";
+import { WhatsappLogo } from "@phosphor-icons/react/dist/ssr/WhatsappLogo";
+import { siteConfig, bookingTarget } from "@/lib/site-config";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contact — Book a Free Consultation | LuminaEdu" },
+      { title: "Contact — Book a Free Consultation | Feja Global" },
       {
         name: "description",
-        content: "Book a free 30-minute consultation with a senior LuminaEdu consultant. Lagos & Abuja offices.",
+        content: "Book a free 30-minute consultation with a senior Feja Global consultant. Lagos & Abuja offices.",
       },
-      { property: "og:title", content: "Contact LuminaEdu" },
+      { property: "og:title", content: "Contact Feja Global" },
       { property: "og:description", content: "Book a free consultation with a senior consultant." },
       { property: "og:url", content: "/contact" },
     ],
@@ -20,26 +25,18 @@ export const Route = createFileRoute("/contact")({
 });
 
 function ContactPage() {
+  const booking = bookingTarget();
+  const { contact, offices } = siteConfig;
   return (
     <>
-      <header className="relative overflow-hidden border-b border-border">
-        <div className="absolute inset-0 -z-10 bg-pinstripe opacity-[0.45]" />
-        <div className="max-w-7xl mx-auto px-6 py-20 lg:py-28">
-          <div className="max-w-3xl">
-            <div className="font-mont text-[11px] font-semibold uppercase tracking-[0.18em] text-brand-blue mb-4">
-              Contact
-            </div>
-            <h1 className="font-display text-5xl md:text-7xl font-light tracking-[-0.035em] leading-[1] text-balance text-brand-navy">
-              Let&apos;s build your study-abroad{" "}
-              <span className="italic text-brand-blue">plan.</span>
-            </h1>
-            <p className="mt-6 text-lg text-muted-foreground max-w-2xl leading-relaxed">
-              Book a free consultation, message us on WhatsApp, or visit our
-              offices in Lagos or Abuja. We respond within 24 hours.
-            </p>
-          </div>
-        </div>
-      </header>
+      <PageHero
+        eyebrow="Contact"
+        title="Let's build your study-abroad"
+        accent="plan."
+        description="Book a free consultation, message us on WhatsApp, or visit our offices in Lagos or Abuja. We respond within 24 hours."
+        image="contact"
+      />
+
 
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-5 gap-10">
@@ -53,15 +50,24 @@ function ContactPage() {
             <LeadForm />
           </div>
           <aside className="lg:col-span-2 space-y-4">
+            {booking.href && booking.external && (
+              <ContactCard
+                Icon={WhatsappLogo}
+                label="Or book directly"
+                value="Pick a slot on Cal.com"
+                href={booking.href}
+                accent
+              />
+            )}
             <ContactCard
               Icon={WhatsappLogo}
               label="WhatsApp"
-              value="+234 812 345 6789"
-              href="https://wa.me/2348123456789"
-              accent
+              value={contact.whatsappNumber}
+              href={contact.whatsappHref}
+              accent={!booking.external}
             />
-            <ContactCard Icon={Phone} label="Call us" value="+234 812 345 6789" href="tel:+2348123456789" />
-            <ContactCard Icon={EnvelopeSimple} label="Email" value="hello@luminaedu.com" href="mailto:hello@luminaedu.com" />
+            <ContactCard Icon={Phone} label="Call us" value={contact.phone} href={contact.phoneHref} />
+            <ContactCard Icon={EnvelopeSimple} label="Email" value={contact.email} href={`mailto:${contact.email}`} />
             <div className="bg-white p-6 border border-brand-navy/10">
               <div className="flex items-center gap-3 mb-3">
                 <span className="size-9 bg-brand-blue-soft text-brand-blue grid place-items-center">
@@ -72,11 +78,11 @@ function ContactPage() {
               <div className="text-sm text-muted-foreground space-y-3">
                 <div>
                   <div className="font-medium text-foreground">Lagos</div>
-                  12 Admiralty Way, Lekki Phase 1
+                  {offices.lagos.addressLines[0]}
                 </div>
                 <div>
                   <div className="font-medium text-foreground">Abuja</div>
-                  5 Aminu Kano Crescent, Wuse II
+                  {offices.abuja.addressLines[0]}
                 </div>
               </div>
             </div>
@@ -88,7 +94,7 @@ function ContactPage() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="aspect-[16/7] w-full overflow-hidden border border-brand-navy/15 shadow-[0_28px_60px_-25px_oklch(0.16_0.04_265_/_0.35)]">
             <iframe
-              title="LuminaEdu Lagos office map"
+              title="Feja Global Lagos office map"
               src="https://www.google.com/maps?q=Lekki+Phase+1+Lagos&output=embed"
               className="w-full h-full border-0"
               loading="lazy"

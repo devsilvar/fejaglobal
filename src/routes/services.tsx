@@ -1,16 +1,26 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { GraduationCap, FileText, Buildings, Sparkle, Users, ChatCircle, Bank, AirplaneTakeoff, House, BookOpen } from "@phosphor-icons/react";
+import { PageHero } from "@/components/site/PageHero";
+import { GraduationCap } from "@phosphor-icons/react/dist/ssr/GraduationCap";
+import { FileText } from "@phosphor-icons/react/dist/ssr/FileText";
+import { Buildings } from "@phosphor-icons/react/dist/ssr/Buildings";
+import { Sparkle } from "@phosphor-icons/react/dist/ssr/Sparkle";
+import { Users } from "@phosphor-icons/react/dist/ssr/Users";
+import { ChatCircle } from "@phosphor-icons/react/dist/ssr/ChatCircle";
+import { Bank } from "@phosphor-icons/react/dist/ssr/Bank";
+import { AirplaneTakeoff } from "@phosphor-icons/react/dist/ssr/AirplaneTakeoff";
+import { House } from "@phosphor-icons/react/dist/ssr/House";
+import { BookOpen } from "@phosphor-icons/react/dist/ssr/BookOpen";
 
 export const Route = createFileRoute("/services")({
   head: () => ({
     meta: [
-      { title: "Services — Admission, Visa & SOP Support | LuminaEdu" },
+      { title: "Services — Admission, Visa & SOP Support | Feja Global" },
       {
         name: "description",
         content:
           "Admission consulting, visa support, school matching, career counseling, SOP coaching and interview preparation — delivered by senior consultants.",
       },
-      { property: "og:title", content: "Services | LuminaEdu" },
+      { property: "og:title", content: "Services | Feja Global" },
       { property: "og:description", content: "End-to-end support: admissions, visas, SOPs, interviews and pre-departure." },
       { property: "og:url", content: "/services" },
     ],
@@ -85,24 +95,14 @@ const services = [
 function ServicesPage() {
   return (
     <>
-      <header className="relative overflow-hidden border-b border-border">
-        <div className="absolute inset-0 -z-10 bg-pinstripe opacity-[0.45]" />
-        <div className="max-w-7xl mx-auto px-6 py-20 lg:py-28">
-          <div className="max-w-3xl">
-            <div className="font-mont text-[11px] font-semibold uppercase tracking-[0.18em] text-brand-blue mb-4">
-              Our Services
-            </div>
-            <h1 className="font-display text-5xl md:text-7xl font-light tracking-[-0.035em] leading-[1] text-balance text-brand-navy">
-              Ten services. One outcome:{" "}
-              <span className="italic text-brand-blue">you, on campus.</span>
-            </h1>
-            <p className="mt-6 text-lg text-muted-foreground max-w-2xl leading-relaxed">
-              Every service is delivered by a senior consultant — never an
-              intern.
-            </p>
-          </div>
-        </div>
-      </header>
+      <PageHero
+        eyebrow="Our Services"
+        title="Ten services. One outcome:"
+        accent="you, on campus."
+        description="Every service is delivered by a senior consultant — never an intern. Pick what you need or take the full end-to-end journey."
+        image="services"
+      />
+
 
       <section className="py-24">
         <div className="max-w-7xl mx-auto px-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">

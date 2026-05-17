@@ -2,6 +2,15 @@
 @source "../src";
 @import "tw-animate-css";
 
+/* Self-hosted fonts — replaces the render-blocking Google Fonts <link>. */
+@import "@fontsource-variable/inter/wght.css";
+@import "@fontsource-variable/fraunces/wght.css";
+@import "@fontsource/montserrat/400.css";
+@import "@fontsource/montserrat/500.css";
+@import "@fontsource/montserrat/600.css";
+@import "@fontsource/montserrat/700.css";
+@import "@fontsource/montserrat/800.css";
+
 @custom-variant dark (&:is(.dark *));
 
 /*
@@ -213,8 +222,15 @@
   .animate-marquee {
     animation: marquee 38s linear infinite;
   }
+  .animate-marquee-right {
+    animation: marquee-right 20s linear infinite;
+  }
   @keyframes marquee {
     from { transform: translateX(0); }
     to { transform: translateX(-50%); }
+  }
+  @keyframes marquee-right {
+    from { transform: translateX(-50%); }
+    to { transform: translateX(0); }
   }
 }
