@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { WhatsappLogo } from "@phosphor-icons/react/dist/ssr/WhatsappLogo";
 import { siteConfig } from "@/lib/site-config";
+import whatsappIcon from "@/assets/whatsapp.png";
 
 export function FloatingWhatsApp() {
   // Lazy-mount after idle so this fixed-position widget never competes with LCP.
@@ -46,14 +46,18 @@ export function FloatingWhatsApp() {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Chat with an advisor on WhatsApp"
-        className="relative flex items-center justify-center size-14 rounded-full bg-[#25D366] text-white shadow-[0_12px_30px_-8px_rgba(37,211,102,0.6)] hover:scale-105 active:scale-95 transition-transform"
+        className="relative flex items-center justify-center size-14 rounded-full bg-[#25D366] shadow-[0_12px_30px_-8px_rgba(37,211,102,0.6)] hover:scale-105 active:scale-95 transition-transform"
       >
         {/* Pulse ring */}
         <span
           aria-hidden
-          className="absolute inset-0 rounded-full bg-[#25D366] opacity-60 animate-ping"
+          className="absolute inset-0 rounded-full bg-white/30 opacity-60 animate-ping"
         />
-        <WhatsappLogo className="size-7 relative" weight="fill" />
+        <img
+          src={whatsappIcon}
+          alt="WhatsApp"
+          className="size-7 object-contain"
+        />
       </a>
     </div>
   );

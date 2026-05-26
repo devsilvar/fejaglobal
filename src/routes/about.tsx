@@ -13,7 +13,7 @@ export const Route = createFileRoute("/about")({
       },
       { property: "og:title", content: "About Feja Global" },
       { property: "og:description", content: "Our mission, our team and how we work." },
-      { property: "og:url", content: "/about" },
+      { property: "og:url", content: "https://fejaglobal.com/about" },
     ],
     links: [{ rel: "canonical", href: "/about" }],
   }),

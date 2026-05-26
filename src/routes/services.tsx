@@ -22,7 +22,7 @@ export const Route = createFileRoute("/services")({
       },
       { property: "og:title", content: "Services | Feja Global" },
       { property: "og:description", content: "End-to-end support: admissions, visas, SOPs, interviews and pre-departure." },
-      { property: "og:url", content: "/services" },
+      { property: "og:url", content: "https://fejaglobal.com/services" },
     ],
     links: [{ rel: "canonical", href: "/services" }],
   }),

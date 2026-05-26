@@ -35,8 +35,69 @@ import ubcLogo from "@/assets/university of bristich columbia.png";
 import edinburghLogo from "@/assets/universitt of edinburgh.png";
 import { ArrowLeft } from "@phosphor-icons/react/dist/ssr/ArrowLeft";
 import { ArrowRight } from "@phosphor-icons/react/dist/ssr/ArrowRight";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
+
+/**
+ * Run a callback once when `ref.current` first enters the viewport.
+ * Cheap, dependency-free reveal-on-scroll primitive.
+ */
+function useInViewOnce<T extends HTMLElement>(
+  options: IntersectionObserverInit = { threshold: 0.2 },
+) {
+  const ref = useRef<T | null>(null);
+  const [inView, setInView] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (typeof IntersectionObserver === "undefined") {
+      setInView(true);
+      return;
+    }
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          setInView(true);
+          io.disconnect();
+        }
+      });
+    }, options);
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+  return { ref, inView };
+}
+
+/**
+ * Animated number that ticks from 0 → `target` once `active` flips true.
+ * Preserves the user's original formatting (suffix, decimals, etc.).
+ */
+function useCountUp(target: number, active: boolean, durationMs = 1600) {
+  const [value, setValue] = useState(0);
+  useEffect(() => {
+    if (!active) return;
+    if (
+      typeof window !== "undefined" &&
+      window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
+    ) {
+      setValue(target);
+      return;
+    }
+    let raf = 0;
+    const start = performance.now();
+    const tick = (now: number) => {
+      const t = Math.min(1, (now - start) / durationMs);
+      // easeOutCubic
+      const eased = 1 - Math.pow(1 - t, 3);
+      setValue(target * eased);
+      if (t < 1) raf = requestAnimationFrame(tick);
+      else setValue(target);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [active, target, durationMs]);
+  return value;
+}
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -53,7 +114,7 @@ export const Route = createFileRoute("/")({
         content:
           "Personal, hands-on guidance from application to departure. Canada and the UK.",
       },
-      { property: "og:url", content: "/" },
+      { property: "og:url", content: "https://fejaglobal.com/" },
     ],
     links: [{ rel: "canonical", href: "/" }],
     scripts: [
@@ -134,6 +195,7 @@ function Hero() {
                 aria-hidden
               >
                 <path
+                  className="animate-draw"
                   d="M2 9 Q 75 2, 150 6 T 298 5"
                   fill="none"
                   stroke="oklch(0.52 0.24 264)"
@@ -261,7 +323,7 @@ function Hero() {
             </svg>
 
             {/* Floating award seal (top right) */}
-            <div className="absolute -top-6 -right-6 sm:-right-10 size-32 sm:size-36 grid place-items-center bg-white rounded-full shadow-xl ring-1 ring-border rotate-[-8deg]">
+            <div className="animate-float-slow absolute -top-6 -right-6 sm:-right-10 size-32 sm:size-36 grid place-items-center bg-white rounded-full shadow-xl ring-1 ring-border rotate-[-8deg]">
               <div className="absolute inset-2 rounded-full ring-1 ring-dashed ring-brand-blue/40" />
               <div className="text-center px-3">
                 <Trophy className="size-5 text-brand-blue mx-auto mb-1" weight="fill" />
@@ -275,7 +337,7 @@ function Hero() {
             </div>
 
             {/* Floating quote card (bottom left) */}
-            <div className="absolute -bottom-6 -left-4 sm:-left-10 max-w-[240px]">
+            <div className="animate-float-slower absolute -bottom-6 -left-4 sm:-left-10 max-w-[240px]">
               {/* Color accent block behind */}
               <div
                 className="absolute -bottom-3 -left-3 w-full h-full bg-brand-blue -z-10"
@@ -358,13 +420,34 @@ function TrustStrip() {
 }
 
 const promises = [
-  { v: "98%", u: "visa", l: "Approval rate to date" },
-  { v: "500+", u: "students", l: "Guided since founding" },
-  { v: "40+", u: "universities", l: "Active partner network" },
-  { v: "24h", u: "reply", l: "From every enquiry" },
+  { target: 98, suffix: "%", u: "visa", l: "Approval rate to date" },
+  { target: 500, suffix: "+", u: "students", l: "Guided since founding" },
+  { target: 40, suffix: "+", u: "universities", l: "Active partner network" },
+  { target: 24, suffix: "h", u: "reply", l: "From every enquiry" },
 ];
 
+function CountStat({
+  target,
+  suffix,
+  active,
+  delay,
+}: {
+  target: number;
+  suffix: string;
+  active: boolean;
+  delay: number;
+}) {
+  const value = useCountUp(target, active, 1500 + delay);
+  return (
+    <span className="font-display text-5xl md:text-6xl font-light tracking-[-0.04em] tabular-nums">
+      {Math.round(value)}
+      {suffix}
+    </span>
+  );
+}
+
 function Promise() {
+  const { ref, inView } = useInViewOnce<HTMLDivElement>({ threshold: 0.25 });
   return (
     <section className="py-24 bg-brand-navy text-white relative overflow-hidden">
       <div className="absolute inset-0 bg-noise opacity-40" aria-hidden />
@@ -377,11 +460,23 @@ function Promise() {
             Quiet work, <span className="italic text-brand-blue">measurable results.</span>
           </h2>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-10">
-          {promises.map((m) => (
-            <div key={m.l} className="relative pl-5 border-l border-white/15">
+        <div
+          ref={ref}
+          className="grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-10"
+        >
+          {promises.map((m, i) => (
+            <div
+              key={m.l}
+              className={`reveal ${inView ? "is-visible" : ""} relative pl-5 border-l border-white/15`}
+              style={{ ["--reveal-delay" as string]: `${i * 120}ms` }}
+            >
               <div className="flex items-baseline gap-2 mb-2">
-                <span className="font-display text-5xl md:text-6xl font-light tracking-[-0.04em]">{m.v}</span>
+                <CountStat
+                  target={m.target}
+                  suffix={m.suffix}
+                  active={inView}
+                  delay={i * 120}
+                />
                 <span className="font-mont text-sm font-medium text-brand-blue lowercase">{m.u}</span>
               </div>
               <div className="font-mont text-[12px] text-white/55 uppercase tracking-[0.16em] leading-relaxed">{m.l}</div>
@@ -566,6 +661,7 @@ const steps = [
 ];
 
 function Process() {
+  const { ref, inView } = useInViewOnce<HTMLDivElement>({ threshold: 0.2 });
   return (
     <section className="py-24">
       <div className="max-w-7xl mx-auto px-6">
@@ -575,11 +671,17 @@ function Process() {
           description="A streamlined process designed for students and parents who value clarity over chaos."
           align="center"
         />
-        <div className="mt-16 grid md:grid-cols-5 gap-6 relative">
-          <div className="hidden md:block absolute top-5 left-[10%] right-[10%] h-px bg-border -z-10" />
-          {steps.map((s) => (
-            <div key={s.n} className="text-center md:text-left">
-              <div className="mx-auto md:mx-0 size-10 rounded-full bg-white ring-1 ring-border grid place-items-center font-mont text-xs font-semibold text-brand-blue mb-4">
+        <div ref={ref} className="mt-16 grid md:grid-cols-5 gap-6 relative">
+          <div
+            className={`process-line ${inView ? "is-visible" : ""} hidden md:block absolute top-5 left-[10%] right-[10%] h-px bg-gradient-to-r from-brand-blue/30 via-brand-blue/60 to-brand-blue/30 -z-10`}
+          />
+          {steps.map((s, i) => (
+            <div
+              key={s.n}
+              className={`reveal ${inView ? "is-visible" : ""} text-center md:text-left`}
+              style={{ ["--reveal-delay" as string]: `${i * 140}ms` }}
+            >
+              <div className="mx-auto md:mx-0 size-10 rounded-full bg-white ring-1 ring-border grid place-items-center font-mont text-xs font-semibold text-brand-blue mb-4 transition-transform duration-300 hover:scale-110 hover:ring-brand-blue hover:text-brand-navy">
                 {s.n}
               </div>
               <h4 className="text-sm font-semibold text-brand-navy mb-2">{s.t}</h4>
@@ -998,16 +1100,28 @@ function FAQ() {
 }
 
 function LeadCapture() {
+  const { ref, inView } = useInViewOnce<HTMLDivElement>({ threshold: 0.15 });
+  const bullets = [
+    "Tailored 1-on-1 strategy",
+    "Transparent cost breakdown",
+    "Reply within 24 hours",
+  ];
   return (
     <section className="py-24 bg-brand-cream/40">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="bg-brand-navy p-8 md:p-16 rounded-sm relative overflow-hidden">
+        <div
+          ref={ref}
+          className={`reveal-scale ${inView ? "is-visible" : ""} bg-brand-navy p-8 md:p-16 rounded-sm relative overflow-hidden`}
+        >
           {/* Architectural corner line */}
           <div className="absolute top-0 right-0 size-64 border-r border-t border-white/10 -mr-20 -mt-20" aria-hidden />
           <div className="absolute bottom-0 left-0 size-48 border-l border-b border-white/10 -ml-16 -mb-16" aria-hidden />
 
           <div className="relative z-10 grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-            <div>
+            <div
+              className={`reveal ${inView ? "is-visible" : ""}`}
+              style={{ ["--reveal-delay" as string]: "150ms" }}
+            >
               <div className="font-mont text-[11px] font-bold uppercase tracking-[0.2em] text-brand-blue mb-5">
                 Free Consultation
               </div>
@@ -1018,12 +1132,12 @@ function LeadCapture() {
                 Book a 30-minute call with a senior consultant. No fee, no pressure — just clear next steps.
               </p>
               <ul className="mt-8 space-y-4">
-                {[
-                  "Tailored 1-on-1 strategy",
-                  "Transparent cost breakdown",
-                  "Reply within 24 hours",
-                ].map((item) => (
-                  <li key={item} className="flex items-center gap-3 text-white/85 text-sm">
+                {bullets.map((item, i) => (
+                  <li
+                    key={item}
+                    className={`reveal ${inView ? "is-visible" : ""} flex items-center gap-3 text-white/85 text-sm`}
+                    style={{ ["--reveal-delay" as string]: `${300 + i * 120}ms` }}
+                  >
                     <Check className="size-5 text-brand-blue shrink-0" weight="bold" />
                     {item}
                   </li>
@@ -1031,7 +1145,10 @@ function LeadCapture() {
               </ul>
             </div>
 
-            <div className="bg-brand-cream p-8 md:p-10 rounded-sm">
+            <div
+              className={`reveal ${inView ? "is-visible" : ""} bg-brand-cream p-6 sm:p-8 md:p-10 w-[95%] sm:w-full mx-auto`}
+              style={{ ["--reveal-delay" as string]: "250ms" }}
+            >
               <LeadForm variant="underline" />
             </div>
           </div>

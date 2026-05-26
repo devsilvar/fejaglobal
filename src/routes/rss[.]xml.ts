@@ -47,10 +47,10 @@ export const Route = createFileRoute("/rss.xml")({
         const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Feja Global Insights</title>
+    <title>Feja Global Blog</title>
     <link>${BASE_URL}/insights</link>
     <atom:link href="${BASE_URL}/rss.xml" rel="self" type="application/rss+xml" />
-    <description>Founder-written guides on studying in Canada and the UK from Nigeria.</description>
+    <description>Founder-written articles on studying in Canada and the UK from Nigeria.</description>
     <language>en</language>
     <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
 ${items}

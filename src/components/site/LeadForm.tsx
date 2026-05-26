@@ -129,7 +129,9 @@ export function LeadForm({
       )}
       <button
         type="submit"
-        className="md:col-span-2 mt-2 bg-brand-blue text-primary-foreground font-mont font-bold uppercase tracking-widest text-xs shadow-lg shadow-brand-blue/20 hover:bg-brand-navy transition-colors disabled:opacity-60 py-4 rounded-full"
+        className={`md:col-span-2 mt-2 bg-brand-blue text-primary-foreground font-mont font-bold uppercase tracking-widest text-xs shadow-lg shadow-brand-blue/20 hover:bg-brand-navy transition-colors disabled:opacity-60 py-4 ${
+          isUnderline ? "rounded-none" : "rounded-full"
+        }`}
         disabled={isSubmitting || submitted}
       >
         {submitted

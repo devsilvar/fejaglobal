@@ -45,7 +45,7 @@ export const siteConfig = {
       phone: get("VITE_LAGOS_PHONE", "+234 812 345 6789"),
     },
     abuja: {
-      addressLines: ["5 Aminu Kano Crescent, Wuse II", "Abuja, FCT"],
+      addressLines: ["248 CRD Federal Housing Lugbe", "Abuja, FCT"],
       phone: get("VITE_ABUJA_PHONE", "+234 803 765 4321"),
     },
   },

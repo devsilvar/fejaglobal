@@ -21,7 +21,18 @@
       "Bash(npm uninstall *)",
       "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\pc\\\\Desktop\\\\github-projects\\\\fejaglobal\\\\dist\" -Recurse)",
       "Bash(Select-Object FullName)",
-      "Bash(Sort-Object FullName)"
+      "Bash(Sort-Object FullName)",
+      "WebSearch",
+      "PowerShell(Get-ChildItem -Path src -Recurse -File -Force | ForEach-Object { $_.FullName })",
+      "mcp__ide__getDiagnostics",
+      "Bash(tasklist)",
+      "Bash(git log *)",
+      "Bash(npx @tanstack/router-cli generate-route-tree --file src/routeTree.gen.ts --out-dir src/routes)",
+      "Bash(taskkill /f /im node.exe)",
+      "Bash(cd /d \"C:\\\\Users\\\\pc\\\\Desktop\\\\github-projects\\\\fejaglobal\")",
+      "Bash(findstr \"body\")",
+      "PowerShell(Get-Content *)",
+      "Bash(Select-String -Pattern \"components/site\" -Context 0, 1)"
     ]
   }
 }

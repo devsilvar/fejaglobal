@@ -223,7 +223,7 @@
     animation: marquee 38s linear infinite;
   }
   .animate-marquee-right {
-    animation: marquee-right 20s linear infinite;
+    animation: marquee-right 12s linear infinite;
   }
   @keyframes marquee {
     from { transform: translateX(0); }
@@ -232,5 +232,92 @@
   @keyframes marquee-right {
     from { transform: translateX(-50%); }
     to { transform: translateX(0); }
+  }
+
+}
+
+/* --------------------------------------------------------------------------
+ * Custom animations (declared OUTSIDE @layer utilities so they're not subject
+ * to Tailwind utility ordering / purge). Targeted by class names applied at
+ * runtime in src/routes/index.tsx via the useInViewOnce hook.
+ * -------------------------------------------------------------------------- */
+
+/* Reveal-on-scroll: start visible for SSR, hide only when JS is ready */
+/* Elements start visible (opacity: 1) and only get the hidden state when
+   the JS hydration watermark attribute [data-js-ready] is present. */
+[data-js-ready] .reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+[data-js-ready] .reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+[data-js-ready] .reveal-scale {
+  opacity: 0;
+  transform: scale(0.94);
+  transition:
+    opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+[data-js-ready] .reveal-scale.is-visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Process connector line — draws left to right when visible */
+.process-line {
+  transform-origin: left center;
+  transform: scaleX(0);
+  transition: transform 1.2s cubic-bezier(0.65, 0, 0.35, 1);
+}
+.process-line.is-visible {
+  transform: scaleX(1);
+}
+
+/* Hero subtle motion */
+.animate-float-slow {
+  animation: float 7s ease-in-out infinite;
+}
+.animate-float-slower {
+  animation: float 9s ease-in-out infinite;
+  animation-delay: 0.6s;
+}
+.animate-draw {
+  stroke-dasharray: 320;
+  stroke-dashoffset: 320;
+  animation: draw 1.6s ease-out 0.6s forwards;
+}
+@keyframes draw {
+  to { stroke-dashoffset: 0; }
+}
+.animate-plane {
+  animation: plane-drift 8s ease-in-out infinite;
+}
+@keyframes plane-drift {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(6px, -4px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal-scale,
+  .process-line {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .animate-float-slow,
+  .animate-float-slower,
+  .animate-plane,
+  .animate-draw {
+    animation: none !important;
   }
 }

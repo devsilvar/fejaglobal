@@ -18,7 +18,7 @@ export const Route = createFileRoute("/scholarships")({
         content:
           "Chevening, Commonwealth, Vanier, Trudeau, Mastercard Foundation and more — eligibility and deadlines.",
       },
-      { property: "og:url", content: "/scholarships" },
+      { property: "og:url", content: "https://fejaglobal.com/scholarships" },
     ],
     links: [{ rel: "canonical", href: "/scholarships" }],
   }),

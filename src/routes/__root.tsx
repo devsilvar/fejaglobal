@@ -10,7 +10,7 @@ import {
 
 import appCss from "../styles.css?url";
 import heroStudent from "@/assets/hero-student.jpg";
-import ogImage from "@/assets/hero-student.jpg";
+import { siteConfig } from "@/lib/site-config";
 import { Navbar } from "@/components/site/Navbar";
 import { Footer } from "@/components/site/Footer";
 import { FloatingWhatsApp } from "@/components/site/FloatingWhatsApp";
@@ -85,11 +85,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:description", content: "Premium consultancy helping African students study in Canada and the UK." },
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: "Feja Global" },
+      { property: "og:url", content: siteConfig.siteUrl },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "Feja Global — Study Abroad in Canada & UK" },
       { name: "twitter:description", content: "Premium consultancy helping African students study in Canada and the UK." },
-      { property: "og:image", content: ogImage },
-      { name: "twitter:image", content: ogImage },
+      { property: "og:image", content: `${siteConfig.siteUrl}/og.png` },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { name: "twitter:image", content: `${siteConfig.siteUrl}/og.png` },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
@@ -131,6 +134,11 @@ function RootShell({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `document.currentScript.parentElement.setAttribute('data-js-ready','')`
+          }}
+        />
         {children}
         <Scripts />
       </body>

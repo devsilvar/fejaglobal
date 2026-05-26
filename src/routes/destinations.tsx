@@ -16,7 +16,7 @@ export const Route = createFileRoute("/destinations")({
       },
       { property: "og:title", content: "Study Destinations — Canada & the UK" },
       { property: "og:description", content: "Compare tuition, visas, scholarships and student life across Canada and the UK." },
-      { property: "og:url", content: "/destinations" },
+      { property: "og:url", content: "https://fejaglobal.com/destinations" },
     ],
     links: [{ rel: "canonical", href: "/destinations" }],
   }),

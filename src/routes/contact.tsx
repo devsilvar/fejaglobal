@@ -17,7 +17,7 @@ export const Route = createFileRoute("/contact")({
       },
       { property: "og:title", content: "Contact Feja Global" },
       { property: "og:description", content: "Book a free consultation with a senior consultant." },
-      { property: "og:url", content: "/contact" },
+      { property: "og:url", content: "https://fejaglobal.com/contact" },
     ],
     links: [{ rel: "canonical", href: "/contact" }],
   }),

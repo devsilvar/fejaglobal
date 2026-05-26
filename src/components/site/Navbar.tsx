@@ -4,12 +4,13 @@ import { List } from "@phosphor-icons/react/dist/ssr/List";
 import { X } from "@phosphor-icons/react/dist/ssr/X";
 import { ArrowUpRight } from "@phosphor-icons/react/dist/ssr/ArrowUpRight";
 import { bookingTarget } from "@/lib/site-config";
+import newLogo from "@/assets/newlogo.png";
 
 const links = [
   { to: "/destinations", label: "Destinations" },
   { to: "/services", label: "Services" },
   { to: "/scholarships", label: "Scholarships" },
-  { to: "/insights", label: "Insights" },
+  // { to: "/insights", label: "Blog" },
   { to: "/about", label: "About" },
   { to: "/contact", label: "Contact" },
 ] as const;
@@ -21,9 +22,15 @@ export function Navbar() {
     <div className="sticky top-0 z-50">
       {/* Announcement bar */}
       <div className="bg-brand-peach/70 text-brand-navy">
-        <div className="max-w-7xl mx-auto px-6 h-9 flex items-center justify-center gap-2 text-[13px]">
-          <span className="font-mont font-medium">September 2026 intake — early planning helps.</span>
-          <Link to="/contact" className="font-mont font-semibold text-brand-blue inline-flex items-center gap-0.5 hover:underline underline-offset-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-9 flex items-center justify-center gap-2 text-[12px] sm:text-[13px]">
+          <span className="font-mont font-medium truncate">
+            <span className="sm:hidden">Sept 2026 intake</span>
+            <span className="hidden sm:inline">September 2026 intake — early planning helps.</span>
+          </span>
+          <Link
+            to="/contact"
+            className="font-mont font-semibold text-brand-blue inline-flex items-center gap-0.5 hover:underline underline-offset-4 shrink-0"
+          >
             Talk to us <ArrowUpRight className="size-3.5" />
           </Link>
         </div>
@@ -32,22 +39,20 @@ export function Navbar() {
       <nav className="border-b border-border/50 glass-nav">
         <div className="max-w-7xl mx-auto px-6 h-[72px] flex items-center justify-between">
           <div className="flex items-center gap-10">
-            <Link to="/" className="flex items-center gap-2.5 group">
-              <span className="relative size-8 rounded-lg bg-brand-navy grid place-items-center overflow-hidden">
-                <span className="size-3 rounded-full bg-brand-blue" />
-                <span className="absolute -right-1 -bottom-1 size-2 rounded-full bg-brand-peach" />
-              </span>
-              <span className="font-display text-xl font-medium tracking-tight text-brand-navy">
-                feja
-              </span>
+            <Link to="/" className="flex items-center">
+              <img
+                src={newLogo}
+                alt="Feja Global"
+                className="h-16 w-auto object-contain"
+              />
             </Link>
             <div className="hidden md:flex gap-7">
               {links.map((l) => (
                 <Link
                   key={l.to}
                   to={l.to}
-                  className="font-mont text-sm font-medium text-foreground/70 hover:text-brand-navy transition-colors"
-                  activeProps={{ className: "text-brand-navy" }}
+                  className="font-mont text-sm font-medium text-foreground/70 hover:text-brand-navy transition-colors relative pb-1 after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-brand-blue after:transform after:scale-x-0 after:transition-transform after:duration-300 after:ease-out after:origin-left hover:after:scale-x-100"
+                  activeProps={{ className: "text-brand-navy after:scale-x-100" }}
                 >
                   {l.label}
                 </Link>
