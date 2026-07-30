@@ -42,11 +42,11 @@ export const siteConfig = {
   offices: {
     lagos: {
       addressLines: ["12 Admiralty Way, Lekki Phase 1", "Lagos, Nigeria"],
-      phone: get("VITE_LAGOS_PHONE", "+234 812 345 6789"),
+      phone: get("VITE_LAGOS_PHONE", "+234 818 897 5888"),
     },
     abuja: {
       addressLines: ["248 CRD Federal Housing Lugbe", "Abuja, FCT"],
-      phone: get("VITE_ABUJA_PHONE", "+234 803 765 4321"),
+      phone: get("VITE_ABUJA_PHONE", "+234 818 897 5888"),
     },
   },
 } as const;

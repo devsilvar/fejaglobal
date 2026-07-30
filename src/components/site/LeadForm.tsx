@@ -1,23 +1,8 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import { toast } from "sonner";
-import { supabase } from "@/integrations/supabase/client";
-
-const leadSchema = z.object({
-  name: z.string().trim().min(2, "Please enter your full name").max(100),
-  email: z.string().trim().email("Enter a valid email"),
-  phone: z.string().trim().min(7, "Enter a valid phone number").max(20),
-  destination: z.enum(["Canada", "United Kingdom", "Both"]),
-  study_level: z
-    .enum(["Undergraduate", "Postgraduate", "PhD", "Foundation / Diploma"])
-    .optional(),
-  // Honeypot — real users never fill this field. Bots usually do.
-  company: z.string().max(0, "Bot detected").optional().or(z.literal("")),
-});
-
-type LeadFormValues = z.infer<typeof leadSchema>;
+import { leadSchema, type LeadFormValues } from "@/lib/lead-schema";
 
 export function LeadForm({
   compact = false,
@@ -44,26 +29,27 @@ export function LeadForm({
   });
 
   const onSubmit = handleSubmit(async (values) => {
-    // Honeypot: silently succeed without writing to the DB.
+    // Honeypot: silently succeed without sending.
     if (values.company && values.company.length > 0) {
       setSubmitted(true);
       return;
     }
 
-    const { error } = await supabase.from("leads").insert({
-      name: values.name,
-      email: values.email,
-      phone: values.phone,
-      destination: values.destination,
-      study_level: values.study_level ?? null,
-      source: "website",
-      user_agent:
-        typeof navigator !== "undefined" ? navigator.userAgent.slice(0, 500) : null,
-    });
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      });
 
-    if (error) {
+      if (!res.ok) {
+        toast.error("Couldn't send that — try again, or WhatsApp us.");
+        console.error("[LeadForm] /api/contact responded", res.status);
+        return;
+      }
+    } catch (err) {
       toast.error("Couldn't send that — try again, or WhatsApp us.");
-      console.error("[LeadForm] supabase insert failed", error);
+      console.error("[LeadForm] /api/contact request failed", err);
       return;
     }
 

@@ -45,7 +45,7 @@ export function Navbar() {
                 alt="Feja Global"
                 className="h-16 w-auto object-contain"
               />
-            </Link>
+            </Link> 
             <div className="hidden md:flex gap-7">
               {links.map((l) => (
                 <Link

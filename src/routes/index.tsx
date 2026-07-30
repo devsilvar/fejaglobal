@@ -215,27 +215,34 @@ function Hero() {
           </p>
 
           <div className="flex flex-wrap gap-3 items-center mb-12">
+            <a
+              href="https://forms.gle/wsHMyYrqAJBYVbsY7"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center gap-2 bg-brand-navy text-white py-4 px-7 rounded-full font-mont font-semibold shadow-[0_12px_30px_-10px_oklch(0.16_0.04_265_/_0.45)] hover:shadow-[0_18px_44px_-12px_oklch(0.16_0.04_265_/_0.6)] hover:-translate-y-0.5 transition-all"
+            >
+              Apply Now
+              <span className="grid place-items-center size-5 rounded-full bg-white/15 group-hover:bg-white/25 transition-colors">
+                →
+              </span>
+            </a>
             {booking.external ? (
               <a
                 href={booking.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex items-center gap-2 bg-brand-navy text-white py-4 px-7 rounded-full font-mont font-semibold shadow-[0_12px_30px_-10px_oklch(0.16_0.04_265_/_0.45)] hover:shadow-[0_18px_44px_-12px_oklch(0.16_0.04_265_/_0.6)] hover:-translate-y-0.5 transition-all"
+                className="inline-flex items-center gap-2 text-brand-navy py-4 px-6 rounded-full font-mont font-semibold ring-1 ring-brand-navy/15 hover:ring-brand-navy/30 hover:bg-white transition-all"
               >
                 Schedule a meeting
-                <span className="grid place-items-center size-5 rounded-full bg-white/15 group-hover:bg-white/25 transition-colors">
-                  →
-                </span>
+                <span aria-hidden>↗</span>
               </a>
             ) : (
               <Link
                 to="/contact"
-                className="group inline-flex items-center gap-2 bg-brand-navy text-white py-4 px-7 rounded-full font-mont font-semibold shadow-[0_12px_30px_-10px_oklch(0.16_0.04_265_/_0.45)] hover:shadow-[0_18px_44px_-12px_oklch(0.16_0.04_265_/_0.6)] hover:-translate-y-0.5 transition-all"
+                className="inline-flex items-center gap-2 text-brand-navy py-4 px-6 rounded-full font-mont font-semibold ring-1 ring-brand-navy/15 hover:ring-brand-navy/30 hover:bg-white transition-all"
               >
                 Schedule a meeting
-                <span className="grid place-items-center size-5 rounded-full bg-white/15 group-hover:bg-white/25 transition-colors">
-                  →
-                </span>
+                <span aria-hidden>↗</span>
               </Link>
             )}
             <Link

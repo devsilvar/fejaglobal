@@ -135,12 +135,24 @@ function ServicesPage() {
             Tell us where you want to <span className="italic text-brand-blue">go.</span>
           </h2>
           <p className="text-white/70 mb-8">We&apos;ll help you build the plan to get there.</p>
-          <Link
-            to="/contact"
-            className="inline-flex bg-white text-brand-navy py-3.5 px-6 rounded-full font-mont font-semibold hover:-translate-y-0.5 transition-all"
-          >
-            Book a Free Consultation
-          </Link>
+          <div className="flex flex-wrap justify-center gap-3">
+            <a
+              href="https://forms.gle/wsHMyYrqAJBYVbsY7"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-white text-brand-navy py-3.5 px-6 rounded-full font-mont font-semibold hover:-translate-y-0.5 transition-all"
+            >
+              Apply for Admission Assistance
+              <span aria-hidden>→</span>
+            </a>
+            <Link
+              to="/contact"
+              className="inline-flex items-center gap-2 bg-transparent text-white py-3.5 px-6 rounded-full font-mont font-semibold ring-1 ring-white/30 hover:ring-white/60 hover:bg-white/10 transition-all"
+            >
+              Book a Free Consultation
+              <span aria-hidden>↗</span>
+            </Link>
+          </div>
         </div>
       </section>
     </>
