@@ -9,11 +9,7 @@ export function Footer() {
       <div className="max-w-7xl mx-auto px-6 py-16 grid md:grid-cols-4 gap-12">
         <div className="md:col-span-1">
           <div className="flex items-center gap-2 mb-4">
-            <img
-              src={newLogo}
-              alt="Feja Global"
-              className="size-7 object-contain"
-            />
+            <img src={newLogo} alt="Feja Global" className="size-7 object-contain" />
             <span className="font-display text-base font-medium tracking-tight text-brand-navy">
               feja
             </span>
@@ -60,12 +56,12 @@ export function Footer() {
             Lagos Office
           </h5>
           <p className="text-sm text-muted-foreground leading-relaxed">
-            {lagos.addressLines.map((line, i) => (
+            {/* {lagos.addressLines.map((line, i) => (
               <span key={i}>
                 {line}
                 <br />
               </span>
-            ))}
+            ))} */}
             {lagos.phone}
           </p>
         </div>
@@ -74,12 +70,12 @@ export function Footer() {
             Abuja Office
           </h5>
           <p className="text-sm text-muted-foreground leading-relaxed">
-            {abuja.addressLines.map((line, i) => (
+            {/* {abuja.addressLines.map((line, i) => (
               <span key={i}>
                 {line}
                 <br />
               </span>
-            ))}
+            ))} */}
             {abuja.phone}
           </p>
         </div>
